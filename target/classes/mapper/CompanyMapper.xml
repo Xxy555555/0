@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.CompanyMapper">
+    <select id="com.example.demo.mapper.CompanyMapper.selectPageByLike" resultType="com.example.demo.pojo.dto.PositionDTO">
+
+       select p.id positionId,c.company_name as companyName,p.position,p.num,p.salary,p.address from company as c left join position as p on p.company_id=c.id
+        <where>
+        <if test="address!=null">
+            and address like concat ('%' ,#{address},'%')
+        </if>
+        <if test="companyName!=null">
+            and company_name like concat ('%' ,#{companyName},'%')
+        </if>
+        <if test="num!=null">
+            and num=#{num}
+        </if>
+        <if test="salary!=null">
+            and salary=#{salary}
+        </if>
+
+        <if test="position!=null">
+            and position like concat ('%' ,#{position},'%')
+        </if>
+    </where>
+       and p.publish_status=1
+    </select>
+</mapper>
