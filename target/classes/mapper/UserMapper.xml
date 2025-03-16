@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserMapper">
+    <select id="selectInternshipInfoDTO" resultType="com.example.demo.pojo.dto.InternshipInfoDTO">
+
+        select u.id, uf.name,c.company_name companyName,p.position,uf.Internship_status InternshipStatus from user u left join user_info uf on u.id=uf.id
+                             left join company_and_student cs on cs.student_id=u.id
+                             left join position p on cs.position_id=p.id
+                             left join company c on c.id=p.company_id
+        <where>
+            <if test="name!=null">
+                and uf.name like concat('%',#{name},'%')
+            </if>
+        and u.teacher_id=#{teacherId}
+         and cs.is_accept=1
+        </where>
+    </select>
+
+
+
+</mapper>

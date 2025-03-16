@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/base3
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #email配置
+  mail:
+    host: smtp.qq.com # smtp地址，开通的时候会显示
+    username: 1774012815@qq.com # 你的邮箱账号
+    password: cdxqqaembhxzcgfi # 你的邮箱授权码
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+
+# 日志配置，打印SQL语句
+logging:
+  level:
+    com.example.demo.mapper: DEBUG
+
+mybatis-plus:
+#  mapper-locations: classpath*:mapper/*.xml  # XML映射文件路径
+#  type-aliases-package: com.example.entity    # 实体类包路径
+  configuration:
+    map-underscore-to-camel-case: true       # 开启驼峰命名转换
+aliyun:
+  oss:
+    endpoint: https://oss-cn-beijing.aliyuncs.com
+    accessKeyId: LTAI5tH2d9icMLFSkA3oGoBQ
+    accessKeySecret: 1BGJrbB9rotpTwHFeniShTBi46fJPk
+    bucketName: xxydemo
+
+

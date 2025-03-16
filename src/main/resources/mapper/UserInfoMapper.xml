@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserInfoMapper">
+    <select id="selectUserByPage" resultType="com.example.demo.pojo.UserInfo">
+
+    select * from user_info where type=#{type}
+    </select>
+
+
+    <select id="selectUserInfoByPage" resultType="com.example.demo.pojo.dto.UserInfoDTO">
+
+        select * from user_info as u left join user on u.id=user.id
+        <where>
+            <if test="type!=null">
+                and  user.type=#{type}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectListUserInfo" resultType="com.example.demo.pojo.UserInfo">
+
+        select id,name,phone,id_card idCard,gender,age,type,height,weight from user_info
+
+    </select>
+</mapper>

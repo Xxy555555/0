@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.CompanyAndStudentMapper">
+    <select id="selectByIsPass" >
+        select p.company_id as companyId ,p.positin ,p.address,p.salary from position as p
+            left join company as c on  p.company_id=c.id
+            left join company_and_student as cs on cs.position_id=p.id
+        where cs.is_pass=1,cs.student_id=#{studentId}
+    </select>
+<!--  resultType=""-->
+</mapper>
