@@ -108,7 +108,7 @@ public class TaskController {
      * @return
      */
     @GetMapping("/getInfo")
-    private ResponseResult getInfo(@PathParam("name") String name) {
+    private ResponseResult getInfo(String name) {
         List<UserInfo>userInfos=taskService.getInfo(name);
         return ResponseResult.ok( userInfos);
     }

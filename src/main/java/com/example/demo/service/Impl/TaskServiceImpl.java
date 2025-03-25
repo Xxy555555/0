@@ -282,7 +282,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
         for (int i=0;i<userInfos.size();i++) {
             LambdaQueryWrapper<User> eq = new LambdaQueryWrapper<User>().eq(User::getId, userInfos.get(i).getId());
             User user = userMapper.selectOne(eq);
-            if(!user.getTeacherId().equals(teacherId))
+            if(user != null && !user.getTeacherId().equals(teacherId))
             {
                 userInfos.remove(userInfos.get(i));
             }
