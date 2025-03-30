@@ -84,7 +84,7 @@ public class TaskController {
      * @return
      */
     @GetMapping("/getOpinion")
-    private ResponseResult getOpinion(@RequestBody @Validated GetContentVo getContentVo) {
+    private ResponseResult getOpinion(@Validated GetContentVo getContentVo) {
         List<Opinion> opinions =taskService.getOpinion(getContentVo);
 
 
