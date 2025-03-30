@@ -30,4 +30,8 @@ public interface TaskService extends IService<Task> {
     List<UserInfo> getInfo(String name);
 
     List<InternshipInfoDTO> getInternshipInfo(String name);
+
+    void StartInternship(Integer studentId);
+
+    List<StudentTask> getOneComplete(GetContentVo getContentVo);
 }

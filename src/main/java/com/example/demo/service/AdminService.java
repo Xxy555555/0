@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public interface AdminService {
     void bindStudent(Map<String, Integer> map);
@@ -34,5 +35,5 @@ public interface AdminService {
 
     List<Positions> getJobMsg(PositionMsgVo positionMsgVo);
 
-    List<Positions> getUserNum();
+    List<Object> getUserNum();
 }

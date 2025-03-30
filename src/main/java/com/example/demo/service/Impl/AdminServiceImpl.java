@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.demo.enums.MapperEnum;
 import com.example.demo.enums.MyExcptionEnum;
 import com.example.demo.exception.Myexception;
 import com.example.demo.mapper.PositionMapper;
@@ -14,8 +15,7 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.pojo.Positions;
 import com.example.demo.pojo.User;
 import com.example.demo.pojo.UserInfo;
-import com.example.demo.pojo.dto.UserInfo1DTO;
-import com.example.demo.pojo.dto.UserInfoDTO;
+import com.example.demo.pojo.dto.*;
 import com.example.demo.pojo.vo.IsDisable;
 import com.example.demo.pojo.vo.JobStatus;
 import com.example.demo.pojo.vo.PositionMsgVo;
@@ -249,13 +249,17 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Positions> getUserNum() {
-        LambdaQueryWrapper<User> ex=new LambdaQueryWrapper<User>().eq(User::getType,"1");
-        Long l = userMapper.selectCount(ex);
-
-
-
-        return List.of();
+    public List<Object> getUserNum() {
+        List<Object> list=new ArrayList();
+        List<UserNumDTO> userNumDTOS = userMapper.selectUserNumDTO();
+ //       userNumDTOS.stream().map()
+//        List<TotalNumberDTO> integers = userMapper.selectPositionNum();
+//        List<reviewStatusNumDTO> reviewStatusNumDTOS = userMapper.selectreviewStatusNum();
+        list.addAll(userNumDTOS);
+//        list.addAll(integers);
+//        list.addAll(reviewStatusNumDTOS);
+        System.out.println(list);
+        return list;
     }
 
 

@@ -13,6 +13,7 @@ import com.example.demo.service.TaskService;
 import com.example.demo.service.UserService;
 import com.example.demo.util.ThreadLocalUtil;
 import jakarta.websocket.server.PathParam;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -62,7 +63,7 @@ public class TaskController {
      * @return
      */
     @GetMapping("/getTask")
-    private ResponseResult getTask(@RequestBody @Validated GetContentVo getContentVo) {
+    private ResponseResult getTask( @Validated GetContentVo getContentVo) {
         List<Task> Tasks =taskService.getTask(getContentVo);
         return ResponseResult.ok(Tasks);
     }
@@ -73,7 +74,7 @@ public class TaskController {
      * @return
      */
     @GetMapping("/getContent")
-    private ResponseResult getContent(@RequestBody @Validated GetContentVo getContentVo) {
+    private ResponseResult getContent( @Validated GetContentVo getContentVo) {
         List<StudentTask> studentTasks =taskService.getContent(getContentVo);
         return ResponseResult.ok(studentTasks);
     }
@@ -84,7 +85,7 @@ public class TaskController {
      * @return
      */
     @GetMapping("/getOpinion")
-    private ResponseResult getOpinion(@RequestBody @Validated GetContentVo getContentVo) {
+    private ResponseResult getOpinion( @Validated GetContentVo getContentVo) {
         List<Opinion> opinions =taskService.getOpinion(getContentVo);
 
 
@@ -117,5 +118,17 @@ public class TaskController {
     private ResponseResult getInternshipInfo(@PathParam("name") String name) {
         List<InternshipInfoDTO>userInfos=taskService.getInternshipInfo(name);
         return ResponseResult.ok( userInfos);
+    }
+    //实习开始
+    @PutMapping("/StartInternship/{studentId}")
+    private ResponseResult StartInternship(@PathVariable() Integer studentId) {
+        taskService.StartInternship(studentId);
+        return ResponseResult.ok( "操作成功");
+    }
+    //查看某一个学生的任务完成情况
+    @GetMapping("/getOneComplete")
+    private ResponseResult getOneComplete( @Validated GetContentVo getContentVo) {
+        List<StudentTask> studentTasks =taskService.getOneComplete(getContentVo);
+        return ResponseResult.ok(studentTasks);
     }
 }

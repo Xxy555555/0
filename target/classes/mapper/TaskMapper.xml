@@ -4,5 +4,13 @@
 <insert id="insertTask" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO task (teacher_id,title,task,start_time,deadline) values (#{teacherId},#{title},#{task},#{startTime},#{deadline})
 </insert>
-
+<select id="selectPageByTitle" resultType="com.example.demo.pojo.Task">
+    select * from task
+    <where>
+        <if test="title!=null">
+            and title like concat('%',#{title},'%')
+        </if>
+    and teacher_id=#{teacherId} and is_deleted=0
+    </where>
+</select>
 </mapper>

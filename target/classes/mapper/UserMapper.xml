@@ -15,7 +15,14 @@
          and cs.is_accept=1
         </where>
     </select>
+<select id="selectUserNumDTO" resultType="com.example.demo.pojo.dto.UserNumDTO">
+    select type,count(*) as userNum from user GROUP BY type
+</select>
+    <select id="selectPositionNum" resultType="com.example.demo.pojo.dto.TotalNumberDTO">
+        SELECT sum(num) totalNumber FROM `position` where publish_status=1 and review_status=2
+    </select>
 
-
-
+    <select id="selectreviewStatusNum"  resultType="com.example.demo.pojo.dto.reviewStatusNumDTO">
+        SELECT review_status, count(*) num FROM `position` GROUP BY review_status
+    </select>
 </mapper>

@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class GetContentVo implements Serializable {
     private Integer taskId;
     private Integer studentId;
+    private String title;
     @NotNull
     private Integer current;
     @NotNull

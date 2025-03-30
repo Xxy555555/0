@@ -140,8 +140,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
         Integer teacherId = (Integer) stringObjectMap.get("id");
         Page<Task> page = new Page<>(getContentVo.getCurrent(), getContentVo.getSize());
 
-        LambdaQueryWrapper<Task> lambdaQueryWrapper=new LambdaQueryWrapper<Task>().eq(Task::getTeacherId, teacherId);
-        Page<Task> taskPage = taskMapper.selectPage(page, lambdaQueryWrapper);
+        Page<Task> taskPage = taskMapper.selectPageByTitle(page,getContentVo.getTitle(),teacherId);
        return taskPage.getRecords();
     }
 
@@ -270,23 +269,24 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
         Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
         Integer teacherId = (Integer) stringObjectMap.get("id");
         List<UserInfo> userInfos=null;
-        if(name==null)
-        {
-             userInfos = userInfoMapper.selectList(null);
 
-
-        }else {
-            LambdaQueryWrapper<UserInfo> lambdaQueryWrapper = new LambdaQueryWrapper<UserInfo>().eq(UserInfo::getName, name);
-             userInfos = userInfoMapper.selectList(lambdaQueryWrapper);
-        }
-        for (int i=0;i<userInfos.size();i++) {
-            LambdaQueryWrapper<User> eq = new LambdaQueryWrapper<User>().eq(User::getId, userInfos.get(i).getId());
-            User user = userMapper.selectOne(eq);
-            if(user != null && !user.getTeacherId().equals(teacherId))
-            {
-                userInfos.remove(userInfos.get(i));
-            }
-        }
+//        if(name==null)
+//        {
+//             userInfos = userInfoMapper.selectList(null);
+//
+//
+//        }else {
+//            LambdaQueryWrapper<UserInfo> lambdaQueryWrapper = new LambdaQueryWrapper<UserInfo>().like(UserInfo::getName, name);
+//             userInfos = userInfoMapper.selectList(lambdaQueryWrapper);
+//        }
+//        for (int i=0;i<userInfos.size();i++) {
+//            LambdaQueryWrapper<User> eq = new LambdaQueryWrapper<User>().eq(User::getId, userInfos.get(i).getId());
+//            User user = userMapper.selectOne(eq);
+//            if(user != null && !user.getTeacherId().equals(teacherId))
+//            {
+//                userInfos.remove(userInfos.get(i));
+//            }
+//        }
         return userInfos;
     }
 
@@ -301,6 +301,54 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
 
         userInfos=  userMapper.selectInternshipInfoDTO(name, teacherId);
         return userInfos;
+    }
+
+    @Override
+    public void StartInternship(Integer studentId) {
+        if( permissionVerification()!=2){
+            throw new Myexception("你不是老师无该权限",2333);
+        }
+        Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
+        Integer teacherId = (Integer) stringObjectMap.get("id");
+        LambdaQueryWrapper<User> ex = new LambdaQueryWrapper<User>().eq(User::getId, studentId);
+        User stu = userMapper.selectOne(ex);
+        if(stu==null)
+        {
+            throw new Myexception("无该学生",2333);
+        }
+        if(!stu.getTeacherId().equals(teacherId))
+        {
+            throw new Myexception("您没有该学生",2333);
+        }
+        LambdaQueryWrapper<UserInfo> ex1 = new LambdaQueryWrapper<UserInfo>().eq(UserInfo::getId, studentId);
+        UserInfo userInfo = userInfoMapper.selectOne(ex1);
+        if(userInfo==null)
+        {
+            throw new Myexception("该学生没有完成基本信息",2333);
+        }
+        userInfo.setInternshipStatus(1);
+        userInfoMapper.updateById(userInfo);
+    }
+
+    @Override
+    public List<StudentTask> getOneComplete(GetContentVo getContentVo) {
+        if( permissionVerification()!=2){
+            throw new Myexception("你不是老师无该权限",2333);
+        }
+        Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
+        Integer teacherId = (Integer) stringObjectMap.get("id");
+        LambdaQueryWrapper<User> ex = new LambdaQueryWrapper<User>().eq(User::getId, getContentVo.getStudentId());
+        User stu = userMapper.selectOne(ex);
+        if(stu==null)
+        {
+            throw new Myexception("无该学生",2333);
+        }
+        if(!stu.getTeacherId().equals(teacherId))
+        {
+            throw new Myexception("您没有该学生",2333);
+        }
+        List<StudentTask> studentTasks = studentTaskMapper.selectList(new LambdaQueryWrapper<StudentTask>().eq(StudentTask::getStudentId, getContentVo.getStudentId()));
+        return studentTasks;
     }
 
     /**
