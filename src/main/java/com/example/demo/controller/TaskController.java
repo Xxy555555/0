@@ -62,7 +62,7 @@ public class TaskController {
      * @return
      */
     @GetMapping("/getTask")
-    private ResponseResult getTask(@RequestBody @Validated GetContentVo getContentVo) {
+    private ResponseResult getTask(@Validated GetContentVo getContentVo) {
         List<Task> Tasks =taskService.getTask(getContentVo);
         return ResponseResult.ok(Tasks);
     }
@@ -73,7 +73,7 @@ public class TaskController {
      * @return
      */
     @GetMapping("/getContent")
-    private ResponseResult getContent(@RequestBody @Validated GetContentVo getContentVo) {
+    private ResponseResult getContent(@Validated GetContentVo getContentVo) {
         List<StudentTask> studentTasks =taskService.getContent(getContentVo);
         return ResponseResult.ok(studentTasks);
     }
