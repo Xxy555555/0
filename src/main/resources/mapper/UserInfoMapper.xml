@@ -9,11 +9,12 @@
 
     <select id="selectUserInfoByPage" resultType="com.example.demo.pojo.dto.UserInfoDTO">
 
-        select * from user_info as u left join user on u.id=user.id
+        select * from  user left join user_info as u on u.id=user.id
         <where>
             <if test="type!=null">
                 and  user.type=#{type}
             </if>
+        and user.is_deleted=0
         </where>
     </select>
 
