@@ -14,6 +14,7 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.pojo.Positions;
 import com.example.demo.pojo.User;
 import com.example.demo.pojo.UserInfo;
+import com.example.demo.pojo.dto.UserInfo1DTO;
 import com.example.demo.pojo.dto.UserInfoDTO;
 import com.example.demo.pojo.vo.IsDisable;
 import com.example.demo.pojo.vo.JobStatus;
@@ -150,7 +151,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<UserInfoDTO> getUserInfo(Integer current, Integer size,Integer type) {
+    public List<UserInfo1DTO> getUserInfo(Integer current, Integer size, Integer type) {
         if(permissionVerification()!=0)
         {
             throw new Myexception("你不是管理员没有该权限",2400);
@@ -158,13 +159,13 @@ public class AdminServiceImpl implements AdminService {
         Page<UserInfoDTO> objectPage = new Page<>(current,size);
         if(type==0){//查询所有用户
 
-            Page<UserInfoDTO> userInfoDTOPage = userInfoMapper.selectUserInfoByPage(objectPage,null);
+            Page<UserInfo1DTO> userInfoDTOPage = userInfoMapper.selectUserInfoByPage(objectPage,null);
 
             return userInfoDTOPage.getRecords();
         } else  {
 
 
-            Page<UserInfoDTO> userInfoDTOPage = userInfoMapper.selectUserInfoByPage(objectPage,type);
+            Page<UserInfo1DTO> userInfoDTOPage = userInfoMapper.selectUserInfoByPage(objectPage,type);
 
             return userInfoDTOPage.getRecords();
 
@@ -242,9 +243,19 @@ public class AdminServiceImpl implements AdminService {
         }
         Page<Positions> positionsPage = new Page<>(positionMsgVo.getCurrent(),positionMsgVo.getSize());
 
-        IPage<Positions> positionsIPage = positionMapper.selectPageByPosition(positionsPage, positionMsgVo.getPosition());
+        IPage<Positions> positionsIPage = positionMapper.selectPageByPosition(positionsPage, positionMsgVo.getPosition(),positionMsgVo.getReviewStatus());
 
         return positionsIPage.getRecords();
+    }
+
+    @Override
+    public List<Positions> getUserNum() {
+        LambdaQueryWrapper<User> ex=new LambdaQueryWrapper<User>().eq(User::getType,"1");
+        Long l = userMapper.selectCount(ex);
+
+
+
+        return List.of();
     }
 
 

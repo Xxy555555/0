@@ -14,4 +14,5 @@ public class PositionMsgVo {
     private String position;
     @NotNull
     private Integer current;
+    private Integer reviewStatus;
 }

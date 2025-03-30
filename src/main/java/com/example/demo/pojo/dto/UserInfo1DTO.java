@@ -1,11 +1,11 @@
 package com.example.demo.pojo.dto;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 @Data
-public class UserInfoDTO {
-
+public class UserInfo1DTO {
+    private String userName;
+    private String email;
     //@ExcelProperty("ID")
     private Integer Id;//主键ID
 
