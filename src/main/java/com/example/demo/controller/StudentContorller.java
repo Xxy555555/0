@@ -69,7 +69,7 @@ public class StudentContorller {
      * @return
      */
     @GetMapping("/getPosition")//
-    private ResponseResult getPosition(@RequestBody CompanyPageVo companyPageVo  ) {
+    private ResponseResult getPosition(CompanyPageVo companyPageVo  ) {
         List<PositionDTO>positionList  =studentService.getPosition(companyPageVo);
 
         return ResponseResult.ok(positionList);

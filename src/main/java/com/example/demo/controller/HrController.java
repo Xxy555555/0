@@ -49,7 +49,7 @@ public class HrController {
      * @return
      */
     @GetMapping("/getResume")
-    private ResponseResult getResume(@RequestBody @Validated GetResumeVo getResumeVo) {
+    private ResponseResult getResume(@Validated GetResumeVo getResumeVo) {
 
        List< Student> students=hrService.getResume(getResumeVo);
         return ResponseResult.ok(students);
