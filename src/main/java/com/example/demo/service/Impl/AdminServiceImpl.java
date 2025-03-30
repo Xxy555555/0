@@ -17,6 +17,7 @@ import com.example.demo.pojo.UserInfo;
 import com.example.demo.pojo.dto.UserInfoDTO;
 import com.example.demo.pojo.vo.IsDisable;
 import com.example.demo.pojo.vo.JobStatus;
+import com.example.demo.pojo.vo.PositionMsgVo;
 import com.example.demo.pojo.vo.UserInfoVo;
 import com.example.demo.service.AdminService;
 import com.example.demo.util.Md5Util;
@@ -234,14 +235,16 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Positions> getJobMsg() {
+    public List<Positions> getJobMsg(PositionMsgVo positionMsgVo) {
         if(permissionVerification()!=0)
         {
             throw new Myexception("你不是管理员没有该权限",2400);
         }
-        LambdaQueryWrapper<Positions> ex=new LambdaQueryWrapper<Positions>().eq(Positions::getReviewStatus,1);
+        Page<Positions> positionsPage = new Page<>(positionMsgVo.getCurrent(),positionMsgVo.getSize());
 
-        return positionMapper.selectList(ex);
+        IPage<Positions> positionsIPage = positionMapper.selectPageByPosition(positionsPage, positionMsgVo.getPosition());
+
+        return positionsIPage.getRecords();
     }
 
 

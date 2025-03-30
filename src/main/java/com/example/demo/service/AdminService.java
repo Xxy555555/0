@@ -7,6 +7,7 @@ import com.example.demo.pojo.UserInfo;
 import com.example.demo.pojo.dto.UserInfoDTO;
 import com.example.demo.pojo.vo.IsDisable;
 import com.example.demo.pojo.vo.JobStatus;
+import com.example.demo.pojo.vo.PositionMsgVo;
 import com.example.demo.pojo.vo.UserInfoVo;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -30,6 +31,6 @@ public interface AdminService {
 
     void Review(JobStatus jobStatus);
 
-    List<Positions> getJobMsg();
+    List<Positions> getJobMsg(PositionMsgVo positionMsgVo);
 
 }

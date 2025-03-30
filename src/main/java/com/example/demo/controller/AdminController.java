@@ -6,6 +6,7 @@ import com.example.demo.pojo.UserInfo;
 import com.example.demo.pojo.dto.UserInfoDTO;
 import com.example.demo.pojo.vo.IsDisable;
 import com.example.demo.pojo.vo.JobStatus;
+import com.example.demo.pojo.vo.PositionMsgVo;
 import com.example.demo.pojo.vo.UserInfoVo;
 import com.example.demo.result.ResponseResult;
 import com.example.demo.service.AdminService;
@@ -119,8 +120,8 @@ public class AdminController {
     }
     //查看提交的招聘信息
     @GetMapping("/getJobMsg")
-    private ResponseResult getJobMsg() {
-        List<Positions>  position=adminService.getJobMsg();
+    private ResponseResult getJobMsg(@RequestBody @Validated PositionMsgVo positionMsgVo) {
+        List<Positions>  position=adminService.getJobMsg(positionMsgVo);
 
         return ResponseResult.ok(position);
     }
