@@ -239,12 +239,13 @@ return task.getRecords();
         if( permissionVerification()!=2){
             throw new Myexception("你不是老师无该权限",2333);
         }
+        Page<UserInfo>page=new Page<>(internshipStatusVo.getCurrent(),internshipStatusVo.getSize());
         Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
         Integer teacherId = (Integer) stringObjectMap.get("id");
-        List<UserInfo> userInfos = userInfoMapper.selectListUserInfo(internshipStatusVo.getInternshipStatus(), teacherId, internshipStatusVo.getName());
+        Page<UserInfo> userInfos = userInfoMapper.selectListUserInfo(page,internshipStatusVo.getInternshipStatus(), teacherId, internshipStatusVo.getName());
 
 
-        return userInfos;
+        return userInfos.getRecords();
     }
 
     @Override

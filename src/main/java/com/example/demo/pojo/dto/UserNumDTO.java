@@ -6,4 +6,6 @@ import lombok.Data;
 public class UserNumDTO {
     private Integer type;
     private Integer userNum;
+
+
 }

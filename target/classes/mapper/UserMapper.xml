@@ -16,7 +16,7 @@
         </where>
     </select>
 <select id="selectUserNumDTO" resultType="com.example.demo.pojo.dto.UserNumDTO">
-    select type,count(*) as userNum from user GROUP BY type
+    select type,count(*) as userNum from user where type=1 or type=2 or type=3 GROUP BY type
 </select>
     <select id="selectPositionNum" resultType="com.example.demo.pojo.dto.TotalNumberDTO">
         SELECT sum(num) totalNumber FROM `position` where publish_status=1 and review_status=2

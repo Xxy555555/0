@@ -20,7 +20,6 @@ public class Positions {
 
     private Integer reviewStatus;//审核状态 0   1提交 通过  驳回
     private String reason; //驳回理由
-
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.enums.MapperEnum;
 import com.example.demo.enums.MyExcptionEnum;
+import com.example.demo.enums.StatusEnum;
 import com.example.demo.exception.Myexception;
 import com.example.demo.mapper.PositionMapper;
 import com.example.demo.mapper.UserInfoMapper;
@@ -37,6 +38,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 @Service
 public class AdminServiceImpl implements AdminService {
     @Autowired
@@ -252,12 +255,22 @@ public class AdminServiceImpl implements AdminService {
     public List<Object> getUserNum() {
         List<Object> list=new ArrayList();
         List<UserNumDTO> userNumDTOS = userMapper.selectUserNumDTO();
- //       userNumDTOS.stream().map()
-//        List<TotalNumberDTO> integers = userMapper.selectPositionNum();
-//        List<reviewStatusNumDTO> reviewStatusNumDTOS = userMapper.selectreviewStatusNum();
-        list.addAll(userNumDTOS);
-//        list.addAll(integers);
-//        list.addAll(reviewStatusNumDTOS);
+        List<Map<String,Integer>> collect = userNumDTOS.stream().map(dto -> {
+                    MapperEnum mapper = MapperEnum.fromCode(dto.getType());
+                    return Map.of(mapper.getPosition(), dto.getUserNum());
+                })
+                .collect(Collectors.toList());
+
+        List<TotalNumberDTO> integers = userMapper.selectPositionNum();
+        List<reviewStatusNumDTO> reviewStatusNumDTOS = userMapper.selectreviewStatusNum();
+        List<Map<String,Integer>> collect1 = reviewStatusNumDTOS.stream().map(dto -> {
+                    StatusEnum mapper = StatusEnum.fromCode(dto.getReviewStatus());
+                    return Map.of(mapper.getStatus(), dto.getNum());
+                })
+                .collect(Collectors.toList());
+        list.addAll(collect);
+        list.addAll(integers);
+        list.addAll(collect1);
         System.out.println(list);
         return list;
     }
