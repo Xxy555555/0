@@ -10,6 +10,7 @@ public class GetContentVo implements Serializable {
     private Integer taskId;
     private Integer studentId;
     private String title;
+    private String name;
     @NotNull
     private Integer current;
     @NotNull

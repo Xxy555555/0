@@ -20,7 +20,19 @@
 
     <select id="selectListUserInfo" resultType="com.example.demo.pojo.UserInfo">
 
-        select id,name,phone,id_card idCard,gender,age,type,height,weight from user_info
+        select user_info.* from user_info left join user on user.id=user_info.id
+        <where>
+
+            <if test="InternshipStatus!=null ">
+                and user_info.Internship_status=#{InternshipStatus}
+            </if>
+           and user.teacher_id=#{teacherId}
+
+            <if test="name!=null and name!=''">
+                and user_info.name like concat('%',#{name},'%')
+            </if>
+        and user.type=1 and user.is_deleted=0 and user_info.is_deleted=0
+        </where>
 
     </select>
 </mapper>

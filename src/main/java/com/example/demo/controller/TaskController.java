@@ -7,6 +7,7 @@ import com.example.demo.pojo.*;
 import com.example.demo.pojo.dto.InternshipInfoDTO;
 import com.example.demo.pojo.vo.Evaluate;
 import com.example.demo.pojo.vo.GetContentVo;
+import com.example.demo.pojo.vo.InternshipStatusVo;
 import com.example.demo.pojo.vo.PublishTask;
 import com.example.demo.result.ResponseResult;
 import com.example.demo.service.TaskService;
@@ -109,8 +110,8 @@ public class TaskController {
      * @return
      */
     @GetMapping("/getInfo")
-    private ResponseResult getInfo(@PathParam("name") String name) {
-        List<UserInfo>userInfos=taskService.getInfo(name);
+    private ResponseResult getInfo(InternshipStatusVo internshipStatusVo) {
+        List<UserInfo>userInfos=taskService.getInfo(internshipStatusVo);
         return ResponseResult.ok( userInfos);
     }
     //获取学生实习信息

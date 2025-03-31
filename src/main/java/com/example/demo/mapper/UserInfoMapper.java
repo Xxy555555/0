@@ -15,6 +15,6 @@ import java.util.List;
 public interface UserInfoMapper extends BaseMapper<UserInfo> {
 Page<UserInfo> selectUserByPage(@Param("page") Page<UserInfo> page,@Param("type")Integer type);
     Page<UserInfo1DTO> selectUserInfoByPage(@Param("page") Page<UserInfoDTO> page, @Param("type")Integer type);
-   List<UserInfo> selectListUserInfo();
+   List<UserInfo> selectListUserInfo(@Param("InternshipStatus") Integer InternshipStatus,@Param("teacherId") Integer teacherId,@Param("name")String name);
 
 }

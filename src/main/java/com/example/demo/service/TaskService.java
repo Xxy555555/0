@@ -8,6 +8,7 @@ import com.example.demo.pojo.UserInfo;
 import com.example.demo.pojo.dto.InternshipInfoDTO;
 import com.example.demo.pojo.vo.Evaluate;
 import com.example.demo.pojo.vo.GetContentVo;
+import com.example.demo.pojo.vo.InternshipStatusVo;
 import com.example.demo.pojo.vo.PublishTask;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public interface TaskService extends IService<Task> {
 
     void addevaluate(Evaluate evaluate);
 
-    List<UserInfo> getInfo(String name);
+    List<UserInfo> getInfo(InternshipStatusVo internshipStatusVo);
 
     List<InternshipInfoDTO> getInternshipInfo(String name);
 

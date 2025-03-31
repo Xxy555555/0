@@ -13,4 +13,20 @@
     and teacher_id=#{teacherId} and is_deleted=0
     </where>
 </select>
+    <select id="selectOneByTaskId" resultType="com.example.demo.pojo.StudentTask">
+        select st.* from task t left join student_task st on st.task_id=t.id
+        <where>
+            and t.teacher_id=#{teacherId}
+        <if test="taskId!=null">
+            and t.id=#{taskId}
+        </if>
+            <if test="studentId!=null">
+                and st.student_id=#{studentId}
+            </if>
+            <if test="name!=null and name!=''">
+                and st.name like concat('%',#{name},'%')
+            </if>
+        and st.is_deleted=0 and t.is_deleted=0
+        </where>
+    </select>
 </mapper>
