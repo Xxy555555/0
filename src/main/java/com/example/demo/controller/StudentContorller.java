@@ -1,7 +1,10 @@
 package com.example.demo.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.pojo.Company;
 import com.example.demo.pojo.CompanyAndStudent;
+import com.example.demo.pojo.MyPage;
 import com.example.demo.pojo.dto.PositionDTO;
 import com.example.demo.pojo.vo.*;
 import com.example.demo.result.ResponseResult;
@@ -70,7 +73,7 @@ public class StudentContorller {
      */
     @GetMapping("/getPosition")//
     private ResponseResult getPosition(CompanyPageVo companyPageVo  ) {
-        List<PositionDTO>positionList  =studentService.getPosition(companyPageVo);
+        IPage<PositionDTO> positionList  =studentService.getPosition(companyPageVo);
 
         return ResponseResult.ok(positionList);
     }
@@ -88,8 +91,8 @@ public class StudentContorller {
     }
 
     @GetMapping("/getIsPass")//
-    private ResponseResult getIsPass( ) {
-        List<CompanyAndStudent>companyList  =studentService.getIsPass();
+    private ResponseResult getIsPass(MyPage myPage) {
+        Page<CompanyAndStudent> companyList  =studentService.getIsPass(myPage);
 
         return ResponseResult.ok(companyList);
     }

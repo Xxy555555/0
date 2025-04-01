@@ -161,7 +161,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     }
 
     @Override
-    public List<PositionDTO> getPosition(CompanyPageVo companyPageVo) {
+    public IPage<PositionDTO>  getPosition(CompanyPageVo companyPageVo) {
         if(permissionVerification()!=1)
         {
             throw new Myexception("您不是学生无法进行该操作",9000);
@@ -179,7 +179,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         }
 
 
-        return companyIPage.getRecords();
+        return companyIPage;
     }
 
     @Override
@@ -205,7 +205,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     }
 
     @Override
-    public List<CompanyAndStudent> getIsPass() {
+    public Page<CompanyAndStudent> getIsPass(MyPage myPage) {
         if(permissionVerification()!=1)
         {
             throw new Myexception("您不是学生无法进行该操作",9000);
@@ -213,11 +213,12 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
         Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
         Integer studentId = (Integer) stringObjectMap.get("id");
+        Page<CompanyAndStudent>page = new Page<>(myPage.getCurrent(), myPage.getSize());
         LambdaQueryWrapper<CompanyAndStudent> example = new LambdaQueryWrapper<CompanyAndStudent>().eq(CompanyAndStudent::getStudentId, studentId);
 
 
 
-        return companyAndStudentMapper.selectList(example);
+        return companyAndStudentMapper.selectPage(page,example);
     }
 
     @Override

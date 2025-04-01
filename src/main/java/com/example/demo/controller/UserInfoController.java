@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.pojo.UserInfo;
+import com.example.demo.pojo.dto.UserInfo1DTO;
 import com.example.demo.pojo.vo.UserInfoVo;
 import com.example.demo.result.ResponseResult;
 import com.example.demo.service.UserInfoService;
@@ -28,7 +29,7 @@ public class UserInfoController {
     }
     @GetMapping("/getUserinfo")
     public ResponseResult getUserinfo() {
-       UserInfo userInfo= userInfoService.getUserinfo();
+        UserInfo1DTO userInfo= userInfoService.getUserinfo();
         return ResponseResult.ok(userInfo);
     }
 }

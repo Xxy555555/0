@@ -12,7 +12,7 @@ public class JavaCache {
                         // 设置写入后的过期时间
                         @Override
                         public long expireAfterCreate(String key, String value, long currentTime) {
-                            if (key.equals("code")) {
+                            if (key.endsWith(".com")) {
                                 return TimeUnit.MINUTES.toNanos(5); // 5 分后过期
                             } else if (key.equals("token")) {
                                 return TimeUnit.MINUTES.toNanos(30); // 30分后过期

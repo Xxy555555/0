@@ -10,11 +10,11 @@ public class Company {
     @TableId(type = IdType.AUTO)
     private Integer id;
     private Integer hrId;
-//    private String address;
+    private String companyAddress;
     private String companyName;
-//    private String position;//岗位
-//    private Integer num;//人数
-//    private Double Salary;//薪资
+    private String companyPhone;
+    private String companyEmail;
+
 
 
     @TableField(fill= FieldFill.INSERT)

@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.demo.pojo.Company;
+import com.example.demo.pojo.MyPage;
 import com.example.demo.pojo.Positions;
 import com.example.demo.pojo.Student;
 import com.example.demo.pojo.vo.*;
@@ -63,9 +66,9 @@ public class HrController {
     }
     //查看招聘信息状态
     @GetMapping("/getReview")
-    private ResponseResult getReview() {
+    private ResponseResult getReview(MyPage myPage) {
 
-        List<Positions>info=hrService.getReview();
+        Page<Positions> info=hrService.getReview(myPage);
         return ResponseResult.ok(info);
     }
     //提交审核
@@ -82,11 +85,18 @@ public class HrController {
         hrService.publishStatus(jobStatus);
         return ResponseResult.ok("操作成功");
     }
-    //注册公司
+    //注册(修改)公司信息
     @PostMapping("/registerCompany")
-    private ResponseResult registerCompany(@RequestParam  String companyName) {
+    private ResponseResult registerCompany(@RequestBody@Validated Company1Vo companyVo) {
 
-        hrService.registerCompany(companyName);
-        return ResponseResult.ok("注册成功");
+        String s = hrService.registerCompany(companyVo);
+        return ResponseResult.ok(s);
+    }
+    //查看公司信息
+    @GetMapping("/getCompanyMsg")
+    private ResponseResult getCompanyMsg() {
+
+        Company info=hrService.getCompanyMsg();
+        return ResponseResult.ok(info);
     }
 }

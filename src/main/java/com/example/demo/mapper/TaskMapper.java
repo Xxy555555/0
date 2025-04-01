@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.pojo.StudentTask;
 import com.example.demo.pojo.Task;
+import com.example.demo.pojo.dto.StudentTaskDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,9 +15,9 @@ import java.util.List;
 public interface TaskMapper extends BaseMapper<Task> {
     void  insertTask(Task task);
     Page<Task> selectPageByTitle(@Param("page")Page<Task> page,@Param("title") String title,@Param("teacherId") Integer teacherId);
-    Page<StudentTask> selectOneByTaskId(@Param("page")Page<StudentTask> page,
-                                        @Param("taskId") Integer taskId,
-                                        @Param("teacherId") Integer teacherId,
-                                        @Param("studentId")Integer studentId,
-                                        @Param("name")String name);
+    Page<StudentTaskDTO> selectOneByTaskId(@Param("page")Page<StudentTaskDTO> page,
+                                           @Param("taskId") Integer taskId,
+                                           @Param("teacherId") Integer teacherId,
+                                           @Param("studentId")Integer studentId,
+                                           @Param("name")String name);
 }

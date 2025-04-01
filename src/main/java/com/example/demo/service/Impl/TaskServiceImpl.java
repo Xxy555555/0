@@ -8,10 +8,9 @@ import com.example.demo.exception.Myexception;
 import com.example.demo.mapper.*;
 import com.example.demo.pojo.*;
 import com.example.demo.pojo.dto.InternshipInfoDTO;
-import com.example.demo.pojo.vo.Evaluate;
-import com.example.demo.pojo.vo.GetContentVo;
-import com.example.demo.pojo.vo.InternshipStatusVo;
-import com.example.demo.pojo.vo.PublishTask;
+import com.example.demo.pojo.dto.OPinionDTO;
+import com.example.demo.pojo.dto.StudentTaskDTO;
+import com.example.demo.pojo.vo.*;
 import com.example.demo.service.TaskService;
 import com.example.demo.util.ThreadLocalUtil;
 import jakarta.annotation.Resource;
@@ -133,7 +132,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
     }
 
     @Override
-    public List<Task> getTask(GetContentVo getContentVo ) {
+    public Page<Task> getTask(GetContentVo getContentVo ) {
        if( permissionVerification()!=2){
            throw new Myexception("您不是老师不能进行该操作",2333);
        }
@@ -142,59 +141,62 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
         Page<Task> page = new Page<>(getContentVo.getCurrent(), getContentVo.getSize());
 
         Page<Task> taskPage = taskMapper.selectPageByTitle(page,getContentVo.getTitle(),teacherId);
-       return taskPage.getRecords();
+       return taskPage;
     }
 
     @Override
-    public List<StudentTask> getContent(GetContentVo getContentVo) {
+    public Page<StudentTaskDTO> getContent(GetContentVo getContentVo) {
         if( permissionVerification()!=2){
             throw new Myexception("您不是老师不能进行该操作",2333);
         }
         Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
         Integer teacherId = (Integer) stringObjectMap.get("id");
-        Page<StudentTask> page = new Page<>(getContentVo.getCurrent(), getContentVo.getSize());
+        Page<StudentTaskDTO> page = new Page<>(getContentVo.getCurrent(), getContentVo.getSize());
 
-        Page<StudentTask> task = taskMapper.selectOneByTaskId(page,getContentVo.getTaskId(),teacherId,getContentVo.getStudentId(),getContentVo.getName());
-return task.getRecords();
+        Page<StudentTaskDTO> task = taskMapper.selectOneByTaskId(page,getContentVo.getTaskId(),teacherId,getContentVo.getStudentId(),getContentVo.getName());
+return task;
     }
 
     @Override
-    public List<Opinion> getOpinion(GetContentVo getContentVo) {
+    public Page<OPinionDTO> getOpinion(GetContentVo getContentVo) {
     if( permissionVerification()!=2){
         throw new Myexception("你不是老师无该权限",2333);
     }
         Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
         Integer teacherId = (Integer) stringObjectMap.get("id");
-        Page<User> page = new Page<>(getContentVo.getCurrent(), getContentVo.getSize());
-        List<Opinion> opinions = new ArrayList<>();
-
-        if(getContentVo.getStudentId()==null)
-        {
-            LambdaQueryWrapper<User> lambdaQueryWrapper=new LambdaQueryWrapper<User>().eq(User::getTeacherId, teacherId);
-            Page<User> userPage = userMapper.selectPage(page, lambdaQueryWrapper);
-            List<User> students = userPage.getRecords();
-            for (User student : students) {
-                LambdaQueryWrapper<Opinion>lambdaQueryWrapper1=new LambdaQueryWrapper<Opinion>().eq(Opinion::getStudentId, student.getId());
-                Opinion opinion = opinionMapper.selectOne(lambdaQueryWrapper1);
-                if(opinion!=null) {
-                    opinions.add(opinion);
-                }
-            }
-            return opinions;
-        }
-        LambdaQueryWrapper<User> lambdaQueryWrapper=new LambdaQueryWrapper<User>().eq(User::getTeacherId, teacherId).eq(User::getId, getContentVo.getStudentId());
-        User user = userMapper.selectOne(lambdaQueryWrapper);
-        if(user==null)
-        {
-            {
-                throw new Myexception("您没有该学生",2333);
-            }
-        }
-        LambdaQueryWrapper<Opinion>lambdaQueryWrapper1=new LambdaQueryWrapper<Opinion>().eq(Opinion::getStudentId,getContentVo.getStudentId());
-        Page<Opinion> page1 = new Page<>(getContentVo.getCurrent(), getContentVo.getSize());
-        List<Opinion> opinions1 = opinionMapper.selectList(page1,lambdaQueryWrapper1);
-
-        return opinions1;
+        Page<OPinionDTO> page = new Page<>(getContentVo.getCurrent(), getContentVo.getSize());
+        Page<OPinionDTO> opinion1 = opinionMapper.getOpinion(page, teacherId, getContentVo.getStudentId(), getContentVo.getName());
+        return opinion1;
+//        List<Opinion> opinions = new ArrayList<>();
+//
+//        if(getContentVo.getStudentId()==null)
+//        {
+//            LambdaQueryWrapper<User> lambdaQueryWrapper=new LambdaQueryWrapper<User>().eq(User::getTeacherId, teacherId);
+//            Page<User> userPage = userMapper.selectPage(page, lambdaQueryWrapper);
+//
+//            List<User> students = userPage.getRecords();
+//            for (User student : students) {
+//                LambdaQueryWrapper<Opinion>lambdaQueryWrapper1=new LambdaQueryWrapper<Opinion>().eq(Opinion::getStudentId, student.getId());
+//                Opinion opinion = opinionMapper.selectOne(lambdaQueryWrapper1);
+//                if(opinion!=null) {
+//                    opinions.add(opinion);
+//                }
+//            }
+//            return opinions;
+//        }
+//        LambdaQueryWrapper<User> lambdaQueryWrapper=new LambdaQueryWrapper<User>().eq(User::getTeacherId, teacherId).eq(User::getId, getContentVo.getStudentId());
+//        User user = userMapper.selectOne(lambdaQueryWrapper);
+//        if(user==null)
+//        {
+//            {
+//                throw new Myexception("您没有该学生",2333);
+//            }
+//        }
+//        LambdaQueryWrapper<Opinion>lambdaQueryWrapper1=new LambdaQueryWrapper<Opinion>().eq(Opinion::getStudentId,getContentVo.getStudentId());
+//        Page<Opinion> page1 = new Page<>(getContentVo.getCurrent(), getContentVo.getSize());
+//        Page<Opinion> opinions1 = opinionMapper.selectPage(page1,lambdaQueryWrapper1);
+//
+//        return opinions1.getRecords();
     }
 
     @Override
@@ -235,7 +237,7 @@ return task.getRecords();
     }
 
     @Override
-    public List<UserInfo> getInfo(InternshipStatusVo internshipStatusVo) {
+    public Page<UserInfo> getInfo(InternshipStatusVo internshipStatusVo) {
         if( permissionVerification()!=2){
             throw new Myexception("你不是老师无该权限",2333);
         }
@@ -245,19 +247,19 @@ return task.getRecords();
         Page<UserInfo> userInfos = userInfoMapper.selectListUserInfo(page,internshipStatusVo.getInternshipStatus(), teacherId, internshipStatusVo.getName());
 
 
-        return userInfos.getRecords();
+        return userInfos;
     }
 
     @Override
-    public List<InternshipInfoDTO> getInternshipInfo(String name) {
+    public Page<InternshipInfoDTO> getInternshipInfo(InternshipInfoVo internshipInfoVo) {
         if( permissionVerification()!=2){
             throw new Myexception("你不是老师无该权限",2333);
         }
         Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
         Integer teacherId = (Integer) stringObjectMap.get("id");
-        List<InternshipInfoDTO> userInfos=null;
 
-        userInfos=  userMapper.selectInternshipInfoDTO(name, teacherId);
+        Page<InternshipInfoDTO> page = new Page<>(internshipInfoVo.getCurrent(),internshipInfoVo.getSize());
+        Page<InternshipInfoDTO>  userInfos=  userMapper.selectInternshipInfoDTO(page,internshipInfoVo.getName(), teacherId);
         return userInfos;
     }
 
@@ -289,7 +291,7 @@ return task.getRecords();
     }
 
     @Override
-    public List<StudentTask> getOneComplete(GetContentVo getContentVo) {
+    public Page<StudentTask> getOneComplete(GetContentVo getContentVo) {
         if( permissionVerification()!=2){
             throw new Myexception("你不是老师无该权限",2333);
         }
@@ -305,7 +307,8 @@ return task.getRecords();
         {
             throw new Myexception("您没有该学生",2333);
         }
-        List<StudentTask> studentTasks = studentTaskMapper.selectList(new LambdaQueryWrapper<StudentTask>().eq(StudentTask::getStudentId, getContentVo.getStudentId()));
+        Page<StudentTask> page = new Page<>(getContentVo.getCurrent(),getContentVo.getSize());
+        Page<StudentTask> studentTasks = studentTaskMapper.selectPage(page,new LambdaQueryWrapper<StudentTask>().eq(StudentTask::getStudentId, getContentVo.getStudentId()));
         return studentTasks;
     }
 

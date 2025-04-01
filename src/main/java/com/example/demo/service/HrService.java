@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.demo.pojo.Company;
+import com.example.demo.pojo.MyPage;
 import com.example.demo.pojo.Positions;
 import com.example.demo.pojo.Student;
 import com.example.demo.pojo.vo.*;
@@ -15,12 +18,14 @@ public interface HrService {
 
     void hiredStudent(PositionVo positionVo);
 
-    List<Positions> getReview();
+    Page<Positions> getReview(MyPage myPage);
 
 
     void publishReview(JobStatus jobStatus);
 
     void publishStatus(JobStatus jobStatus);
 
-    void registerCompany(String companyName);
+    String registerCompany(Company1Vo companyVo);
+
+    Company getCompanyMsg();
 }

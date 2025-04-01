@@ -1,15 +1,15 @@
 package com.example.demo.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.demo.pojo.Opinion;
 import com.example.demo.pojo.StudentTask;
 import com.example.demo.pojo.Task;
 import com.example.demo.pojo.UserInfo;
 import com.example.demo.pojo.dto.InternshipInfoDTO;
-import com.example.demo.pojo.vo.Evaluate;
-import com.example.demo.pojo.vo.GetContentVo;
-import com.example.demo.pojo.vo.InternshipStatusVo;
-import com.example.demo.pojo.vo.PublishTask;
+import com.example.demo.pojo.dto.OPinionDTO;
+import com.example.demo.pojo.dto.StudentTaskDTO;
+import com.example.demo.pojo.vo.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,19 +20,19 @@ public interface TaskService extends IService<Task> {
 
     void sendMsg();
 
-    List<Task> getTask(GetContentVo getContentVo);
+    Page<Task> getTask(GetContentVo getContentVo);
 
-    List<StudentTask> getContent(GetContentVo getContentVo);
+    Page<StudentTaskDTO> getContent(GetContentVo getContentVo);
 
-    List<Opinion> getOpinion(GetContentVo getContentVo);
+    Page<OPinionDTO> getOpinion(GetContentVo getContentVo);
 
     void addevaluate(Evaluate evaluate);
 
-    List<UserInfo> getInfo(InternshipStatusVo internshipStatusVo);
+    Page<UserInfo> getInfo(InternshipStatusVo internshipStatusVo);
 
-    List<InternshipInfoDTO> getInternshipInfo(String name);
+    Page<InternshipInfoDTO> getInternshipInfo(InternshipInfoVo internshipInfoVo);
 
     void StartInternship(Integer studentId);
 
-    List<StudentTask> getOneComplete(GetContentVo getContentVo);
+    Page<StudentTask> getOneComplete(GetContentVo getContentVo);
 }

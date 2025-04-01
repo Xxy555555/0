@@ -1,10 +1,11 @@
 package com.example.demo.pojo.vo;
 
+import com.example.demo.pojo.MyPage;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class CompanyPageVo {
+public class CompanyPageVo extends MyPage {
 
     private String address;
 
@@ -15,8 +16,5 @@ public class CompanyPageVo {
     private Integer num;//人数
 
     private Double salary;//薪资
-    @NotNull
-    private Integer current;
-    @NotNull
-    private Integer size;
+
 }

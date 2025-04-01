@@ -90,8 +90,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!registerUser.getPassword().equals(registerUser.getConfirmPassword())) {
             throw new Myexception(MyExcptionEnum.PASSWORD_IS_NOT_TRUE);
         }
-        if ((registerUser.getCaptcha()==null)||!registerUser.getCaptcha().equals(JavaCache.get(registerUser.getEmail()))) {
-
+        if ((registerUser.getCaptcha()==null)||!(registerUser.getCaptcha().equals(JavaCache.get(registerUser.getEmail())))) {
+            System.out.println(JavaCache.get(registerUser.getEmail()));
+            System.out.println(registerUser.getCaptcha());
+            System.out.println(registerUser.getEmail());
             throw new Myexception(MyExcptionEnum.CODE_ERROR);
         }
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>().eq("email", registerUser.getEmail());

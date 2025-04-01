@@ -13,8 +13,8 @@
     and teacher_id=#{teacherId} and is_deleted=0
     </where>
 </select>
-    <select id="selectOneByTaskId" resultType="com.example.demo.pojo.StudentTask">
-        select st.* from task t left join student_task st on st.task_id=t.id
+    <select id="selectOneByTaskId" resultType="com.example.demo.pojo.dto.StudentTaskDTO">
+        select st.* ,t.title,t.task from task t left join student_task st on st.task_id=t.id
         <where>
             and t.teacher_id=#{teacherId}
         <if test="taskId!=null">

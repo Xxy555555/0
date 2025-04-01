@@ -35,4 +35,15 @@
         </where>
 
     </select>
+    <select id="selectUserInfoByself" resultType="com.example.demo.pojo.dto.UserInfo1DTO">
+
+        select u.*,user.email,user.user_name userName from  user left join user_info as u on u.id=user.id
+        <where>
+            <if test="type!=null">
+                and  user.type=#{type}
+            </if>
+
+            and user.is_deleted=0 and u.id=#{id}
+        </where>
+    </select>
 </mapper>

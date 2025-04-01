@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.pojo.Positions;
 import com.example.demo.pojo.User;
 import com.example.demo.pojo.UserInfo;
@@ -109,7 +111,7 @@ public class AdminController {
      */
     @GetMapping("/getUserInfo")
     private ResponseResult getUserInfo(@PathParam("current") Integer current, @PathParam("size")Integer size,@PathParam("type") Integer type) {
-       List<UserInfo1DTO>  userInfoVo=adminService.getUserInfo(current,size,type);
+        Page<UserInfo1DTO> userInfoVo=adminService.getUserInfo(current,size,type);
 
         return ResponseResult.ok(userInfoVo);
     }
@@ -123,7 +125,7 @@ public class AdminController {
     //查看提交的招聘信息
     @GetMapping("/getJobMsg")
     private ResponseResult getJobMsg( @Validated PositionMsgVo positionMsgVo) {
-        List<Positions>  position=adminService.getJobMsg(positionMsgVo);
+        IPage<Positions> position=adminService.getJobMsg(positionMsgVo);
 
         return ResponseResult.ok(position);
 

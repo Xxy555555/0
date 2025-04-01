@@ -154,7 +154,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<UserInfo1DTO> getUserInfo(Integer current, Integer size, Integer type) {
+    public Page<UserInfo1DTO> getUserInfo(Integer current, Integer size, Integer type) {
         if(permissionVerification()!=0)
         {
             throw new Myexception("你不是管理员没有该权限",2400);
@@ -164,13 +164,13 @@ public class AdminServiceImpl implements AdminService {
 
             Page<UserInfo1DTO> userInfoDTOPage = userInfoMapper.selectUserInfoByPage(objectPage,null);
 
-            return userInfoDTOPage.getRecords();
+            return userInfoDTOPage;
         } else  {
 
 
             Page<UserInfo1DTO> userInfoDTOPage = userInfoMapper.selectUserInfoByPage(objectPage,type);
 
-            return userInfoDTOPage.getRecords();
+            return userInfoDTOPage;
 
         }
 
@@ -239,7 +239,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Positions> getJobMsg(PositionMsgVo positionMsgVo) {
+    public IPage<Positions> getJobMsg(PositionMsgVo positionMsgVo) {
         if(permissionVerification()!=0)
         {
             throw new Myexception("你不是管理员没有该权限",2400);
@@ -248,7 +248,7 @@ public class AdminServiceImpl implements AdminService {
 
         IPage<Positions> positionsIPage = positionMapper.selectPageByPosition(positionsPage, positionMsgVo.getPosition(),positionMsgVo.getReviewStatus());
 
-        return positionsIPage.getRecords();
+        return positionsIPage;
     }
 
     @Override

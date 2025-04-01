@@ -167,7 +167,7 @@ public class HrServiceImpl implements HrService {
     }
 
     @Override
-    public List<Positions> getReview() {
+    public Page<Positions> getReview(MyPage myPage) {
         if(permissionVerification()!=3)
         {
             throw new Myexception("您不是HR不能查看",2333);
@@ -180,8 +180,9 @@ public class HrServiceImpl implements HrService {
         {
             throw new Myexception("请先注册公司",2333);
         }
+        Page<Positions> page=new Page<>(myPage.getCurrent(),myPage.getSize());
         LambdaQueryWrapper<Positions>ex=new LambdaQueryWrapper<Positions>().eq(Positions::getCompanyId,company.getId());
-        List<Positions> positions = positionMapper.selectList(ex);
+        Page<Positions> positions = positionMapper.selectPage(page,ex);
         return positions;
     }
 
@@ -238,17 +239,50 @@ public class HrServiceImpl implements HrService {
     }
 
     @Override
-    public void registerCompany(String companyName) {
+    @Transactional
+    public String registerCompany(Company1Vo companyVo) {
         if(permissionVerification()!=3)
         {
             throw new Myexception("您不是HR不能修改",2333);
         }
         Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
         Integer hrId = (Integer) stringObjectMap.get("id");
+
         Company company = new Company();
+        BeanUtils.copyProperties(companyVo,company);
         company.setHrId(hrId);
-        company.setCompanyName(companyName);
-        companyMapper.insert(company);
+        if(companyVo.getId()==null)
+        {
+            LambdaQueryWrapper<Company>example1 = new LambdaQueryWrapper<Company>().eq(Company::getCompanyEmail,companyVo.getCompanyEmail()).or().eq(Company::getCompanyPhone,companyVo.getCompanyPhone());
+            Company company1 = companyMapper.selectOne(example1);
+            if(company1!=null)
+            {
+                throw new Myexception("邮箱或电话已经被注册",2333);
+            }
+            companyMapper.insert(company);
+            return "注册成功";
+        }else {
+
+            companyMapper.updateById(company);
+            return "修改成功";
+        }
+    }
+
+    @Override
+    public Company getCompanyMsg() {
+        if(permissionVerification()!=3)
+        {
+            throw new Myexception("您不是HR不能查看",2333);
+        }
+        Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
+        Integer hrId = (Integer) stringObjectMap.get("id");
+        LambdaQueryWrapper<Company>example = new LambdaQueryWrapper<Company>().eq(Company::getHrId, hrId);
+        Company company = companyMapper.selectOne(example);
+        if(company==null)
+        {
+            throw new Myexception("请您先注册公司",2333);
+        }
+        return company;
     }
 
     /**

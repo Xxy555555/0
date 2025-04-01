@@ -5,10 +5,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.pojo.*;
 import com.example.demo.pojo.dto.InternshipInfoDTO;
-import com.example.demo.pojo.vo.Evaluate;
-import com.example.demo.pojo.vo.GetContentVo;
-import com.example.demo.pojo.vo.InternshipStatusVo;
-import com.example.demo.pojo.vo.PublishTask;
+import com.example.demo.pojo.dto.OPinionDTO;
+import com.example.demo.pojo.dto.StudentTaskDTO;
+import com.example.demo.pojo.vo.*;
 import com.example.demo.result.ResponseResult;
 import com.example.demo.service.TaskService;
 import com.example.demo.service.UserService;
@@ -65,7 +64,7 @@ public class TaskController {
      */
     @GetMapping("/getTask")
     private ResponseResult getTask( @Validated GetContentVo getContentVo) {
-        List<Task> Tasks =taskService.getTask(getContentVo);
+        Page<Task> Tasks =taskService.getTask(getContentVo);
         return ResponseResult.ok(Tasks);
     }
 
@@ -76,7 +75,7 @@ public class TaskController {
      */
     @GetMapping("/getContent")
     private ResponseResult getContent( @Validated GetContentVo getContentVo) {
-        List<StudentTask> studentTasks =taskService.getContent(getContentVo);
+        Page<StudentTaskDTO> studentTasks =taskService.getContent(getContentVo);
         return ResponseResult.ok(studentTasks);
     }
 
@@ -87,9 +86,7 @@ public class TaskController {
      */
     @GetMapping("/getOpinion")
     private ResponseResult getOpinion( @Validated GetContentVo getContentVo) {
-        List<Opinion> opinions =taskService.getOpinion(getContentVo);
-
-
+        Page<OPinionDTO> opinions =taskService.getOpinion(getContentVo);
         return ResponseResult.ok( opinions);
     }
 
@@ -106,18 +103,18 @@ public class TaskController {
 
     /**
      * 获得学生基本信息
-     * @param name
+     * @param
      * @return
      */
     @GetMapping("/getInfo")
     private ResponseResult getInfo(InternshipStatusVo internshipStatusVo) {
-        List<UserInfo>userInfos=taskService.getInfo(internshipStatusVo);
+        Page<UserInfo>userInfos=taskService.getInfo(internshipStatusVo);
         return ResponseResult.ok( userInfos);
     }
     //获取学生实习信息
     @GetMapping("/getInternshipInfo")
-    private ResponseResult getInternshipInfo(@PathParam("name") String name) {
-        List<InternshipInfoDTO>userInfos=taskService.getInternshipInfo(name);
+    private ResponseResult getInternshipInfo( InternshipInfoVo internshipInfoVo) {
+        Page<InternshipInfoDTO>userInfos=taskService.getInternshipInfo(internshipInfoVo);
         return ResponseResult.ok( userInfos);
     }
     //实习开始
@@ -129,7 +126,7 @@ public class TaskController {
     //查看某一个学生的任务完成情况
     @GetMapping("/getOneComplete")
     private ResponseResult getOneComplete( @Validated GetContentVo getContentVo) {
-        List<StudentTask> studentTasks =taskService.getOneComplete(getContentVo);
+        Page<StudentTask> studentTasks =taskService.getOneComplete(getContentVo);
         return ResponseResult.ok(studentTasks);
     }
 }

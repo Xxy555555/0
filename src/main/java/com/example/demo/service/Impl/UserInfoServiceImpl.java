@@ -7,6 +7,7 @@ import com.example.demo.mapper.UserInfoMapper;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.pojo.User;
 import com.example.demo.pojo.UserInfo;
+import com.example.demo.pojo.dto.UserInfo1DTO;
 import com.example.demo.pojo.vo.UserInfoVo;
 import com.example.demo.service.UserInfoService;
 import com.example.demo.util.ThreadLocalUtil;
@@ -50,13 +51,14 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>im
     }
 
     @Override
-    public UserInfo getUserinfo() {
+    public UserInfo1DTO getUserinfo() {
         Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
         Integer userId = (Integer) stringObjectMap.get("id");
-        QueryWrapper<UserInfo> queryWrapper1 = new QueryWrapper<UserInfo>().eq("id", userId);
+        QueryWrapper<User> queryWrapper1 = new QueryWrapper<User>().eq("id", userId);
+        User user = userMapper.selectOne(queryWrapper1);
+        UserInfo1DTO userInfo1DTO = userInfoMapper.selectUserInfoByself(userId, user.getType());
 
-
-        return userInfoMapper.selectOne(queryWrapper1);
+        return userInfo1DTO;
     }
 
 

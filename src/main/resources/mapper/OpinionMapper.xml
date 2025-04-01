@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.OpinionMapper">
+    <select id="getOpinion" resultType="com.example.demo.pojo.dto.OPinionDTO">
+
+        select o.*,uf.name from opinion o left join user u on u.id=o.student_id left join user_info uf on u.id=uf.id
+        <where>
+            u.is_deleted = 0
+            <if test="name!=null and name!=''">
+                and uf.name like concat('%',#{name},'%')
+            </if>
+
+            <if test="studentId!=null">
+                and o.student_id=#{studentId}
+            </if>
+and u.teacher_id=#{teacherId}
+        </where>
+
+    </select>
+
+</mapper>

@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.demo.pojo.Positions;
 import com.example.demo.pojo.User;
@@ -27,13 +29,13 @@ public interface AdminService {
 
     void addUser(User user);
 
-    List<UserInfo1DTO> getUserInfo(Integer current, Integer Size, Integer type);
+    Page<UserInfo1DTO> getUserInfo(Integer current, Integer Size, Integer type);
 
     void exportData(HttpServletResponse response);
 
     void Review(JobStatus jobStatus);
 
-    List<Positions> getJobMsg(PositionMsgVo positionMsgVo);
+    IPage<Positions> getJobMsg(PositionMsgVo positionMsgVo);
 
     List<Object> getUserNum();
 }
