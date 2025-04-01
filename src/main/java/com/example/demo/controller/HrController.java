@@ -5,6 +5,8 @@ import com.example.demo.pojo.Company;
 import com.example.demo.pojo.MyPage;
 import com.example.demo.pojo.Positions;
 import com.example.demo.pojo.Student;
+import com.example.demo.pojo.dto.OPinionDTO;
+import com.example.demo.pojo.dto.StudentInternshipInfoDTO;
 import com.example.demo.pojo.vo.*;
 import com.example.demo.result.ResponseResult;
 import com.example.demo.service.HrService;
@@ -97,6 +99,13 @@ public class HrController {
     private ResponseResult getCompanyMsg() {
 
         Company info=hrService.getCompanyMsg();
+        return ResponseResult.ok(info);
+    }
+    //查看学生意见
+    @GetMapping("/getOpinion")
+    private ResponseResult getOpinion(GetStudentIfoVo getStudentIfoVo) {
+
+        Page<StudentInternshipInfoDTO> info=hrService.getOpinion(getStudentIfoVo);
         return ResponseResult.ok(info);
     }
 }

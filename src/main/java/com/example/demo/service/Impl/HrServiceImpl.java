@@ -8,6 +8,7 @@ import com.example.demo.enums.MyExcptionEnum;
 import com.example.demo.exception.Myexception;
 import com.example.demo.mapper.*;
 import com.example.demo.pojo.*;
+import com.example.demo.pojo.dto.StudentInternshipInfoDTO;
 import com.example.demo.pojo.vo.*;
 import com.example.demo.service.HrService;
 import com.example.demo.util.ThreadLocalUtil;
@@ -283,6 +284,19 @@ public class HrServiceImpl implements HrService {
             throw new Myexception("请您先注册公司",2333);
         }
         return company;
+    }
+
+    @Override
+    public Page<StudentInternshipInfoDTO> getOpinion(GetStudentIfoVo getStudentIfoVo) {
+        if(permissionVerification()!=3)
+        {
+            throw new Myexception("您不是HR不能查看",2333);
+        }
+        Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
+        Integer hrId = (Integer) stringObjectMap.get("id");
+        Page<StudentInternshipInfoDTO> page=new Page<>(getStudentIfoVo.getCurrent(),getStudentIfoVo.getSize());
+        Page<StudentInternshipInfoDTO> studentInternshipInfoDTOPage = companyMapper.selectStudentInternshipInfo(page, getStudentIfoVo.getStudentName(), hrId);
+        return studentInternshipInfoDTOPage;
     }
 
     /**

@@ -24,4 +24,19 @@
     </where>
        and p.publish_status=1
     </select>
+
+
+    <select id="selectStudentInternshipInfo" resultType="com.example.demo.pojo.dto.StudentInternshipInfoDTO">
+        select uf.*,IFNULL(o.opinion, '') as opinion from user_info uf  left join opinion o on o.student_id=uf.id
+                                                                            left join user u on u.id=uf.id
+        <where>
+            <if test="name!=null and name!=''">
+                and uf.name like concat ('%' ,#{name},'%')
+            </if>
+      and  u.hr_id=#{HrId} and uf.is_deleted=0
+        </where>
+
+
+    </select>
+
 </mapper>
