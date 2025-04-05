@@ -10,5 +10,5 @@ import java.util.List;
 public interface UserInfoService extends IService<UserInfo> {
     void add(UserInfoVo userInfoVo);
 
-    UserInfo1DTO getUserinfo();
+    UserInfo1DTO getUserinfo(Integer id);
 }

@@ -13,5 +13,5 @@ public class PositionMsgVo extends MyPage {
 
     private String position;
 
-    private Integer reviewStatus;
+    private Integer[] reviewStatus;
 }

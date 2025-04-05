@@ -9,6 +9,6 @@ import org.apache.ibatis.annotations.Param;
 
 
 public interface PositionMapper extends BaseMapper<Positions> {
-     IPage<Positions> selectPageByPosition(@Param("page") Page<Positions> page, @Param("positionName")String postionName, @Param("reviewStatus") Integer reviewStatus);
+     IPage<Positions> selectPageByPosition(@Param("page") Page<Positions> page, @Param("positionName")String postionName, @Param("reviewStatus") Integer[] reviewStatus);
 
 }

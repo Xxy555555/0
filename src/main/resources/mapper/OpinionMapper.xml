@@ -3,7 +3,7 @@
 <mapper namespace="com.example.demo.mapper.OpinionMapper">
     <select id="getOpinion" resultType="com.example.demo.pojo.dto.OPinionDTO">
 
-        select o.*,uf.name from opinion o left join user u on u.id=o.student_id left join user_info uf on u.id=uf.id
+        select o.*,uf.name,o.create_time,o.update_time from opinion o left join user u on u.id=o.student_id left join user_info uf on u.id=uf.id
         <where>
             u.is_deleted = 0
             <if test="name!=null and name!=''">

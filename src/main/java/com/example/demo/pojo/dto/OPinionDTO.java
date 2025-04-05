@@ -12,6 +12,9 @@ public class OPinionDTO {
     private Integer HrId;
     private Integer studentId;
     private String opinion;
+    private LocalDateTime createTime;
+    private LocalDateTime updateTime;
     private int isDeleted;
+
 }
 

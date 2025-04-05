@@ -1,5 +1,6 @@
 package com.example.demo.service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.exception.Myexception;
@@ -51,12 +52,12 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>im
     }
 
     @Override
-    public UserInfo1DTO getUserinfo() {
+    public UserInfo1DTO getUserinfo(Integer id) {
         Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
         Integer userId = (Integer) stringObjectMap.get("id");
         QueryWrapper<User> queryWrapper1 = new QueryWrapper<User>().eq("id", userId);
         User user = userMapper.selectOne(queryWrapper1);
-        UserInfo1DTO userInfo1DTO = userInfoMapper.selectUserInfoByself(userId, user.getType());
+        UserInfo1DTO userInfo1DTO = userInfoMapper.selectUserInfoByself(id, user.getType());
 
         return userInfo1DTO;
     }
