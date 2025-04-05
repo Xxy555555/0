@@ -246,8 +246,7 @@ public class AdminServiceImpl implements AdminService {
         }
         Page<Positions> positionsPage = new Page<>(positionMsgVo.getCurrent(),positionMsgVo.getSize());
 
-        IPage<Positions> positionsIPage = positionMapper.selectPageByPosition(positionsPage, positionMsgVo.getPosition(),positionMsgVo.getReviewStatus());
-
+       IPage<Positions> positionsIPage = positionMapper.selectPageByPosition(positionsPage, positionMsgVo.getPosition(),positionMsgVo.getReviewStatus());
         return positionsIPage;
     }
 

@@ -7,8 +7,10 @@ import com.example.demo.pojo.Positions;
 import com.example.demo.pojo.vo.JobStatus;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 
 public interface PositionMapper extends BaseMapper<Positions> {
-     IPage<Positions> selectPageByPosition(@Param("page") Page<Positions> page, @Param("positionName")String postionName, @Param("reviewStatus") Integer[] reviewStatus);
+     IPage<Positions> selectPageByPosition(@Param("page") Page<Positions> page, @Param("positionName")String postionName, @Param("reviewStatus") List<Integer> reviewStatus);
 
 }

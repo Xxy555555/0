@@ -5,13 +5,17 @@
 
         select * from position
         <where>
-            is_deleted = 0
+            <if test="reviewStatus!=null">
+                and review_status IN
+                <foreach collection="reviewStatus" item="reviewStatus" open="(" separator="," close=")">
+                    #{reviewStatus}
+                </foreach>
+            </if>
+           and is_deleted = 0
             <if test="positionName!=null">
                 and position like concat('%',#{positionName},'%')
             </if>
-            <if test="reviewStatus!=null">
-                and review_status=#{reviewStatus}
-            </if>
+
 
         </where>
 

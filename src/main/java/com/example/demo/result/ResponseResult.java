@@ -20,12 +20,21 @@ public class ResponseResult<T> {
         tResponseResult.setMsg(codeEnum.getMessage());
         return tResponseResult;
     }
+    public static <T> ResponseResult<T> build(T data, String msg, int code) {
+        ResponseResult<T> tResponseResult = new ResponseResult<>();
+        if(data!=null) {
+            tResponseResult.setData(data);
+        }
+        tResponseResult.setCode(code);
+        tResponseResult.setMsg(msg);
+        return tResponseResult;
+    }
     public static <T> ResponseResult<T> ok(T data) {
 
         return build(data,CodeEnum.SUCCESS);
     }
-    public static <T> ResponseResult<T> fail() {
-        return build(null,CodeEnum.ERROR);
+    public static <T> ResponseResult<T> fail(String msg) {
+        return build(null,msg,2000);
     }
     public static <T> ResponseResult<T> fail(T data) {
         return build(data,CodeEnum.ERROR);
