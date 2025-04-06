@@ -1,9 +1,12 @@
 package com.example.demo.enums;
 
+import lombok.Data;
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
-
+@Getter
 public enum StatusEnum {
     STU(1,"submit"),
     TEACHER(2,"pass"),
