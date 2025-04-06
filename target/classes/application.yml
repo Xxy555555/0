@@ -1,6 +1,7 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/base3
+#    url: jdbc:mysql://127.0.0.1:3306/base3
+    url: jdbc:mysql://132.232.255.142:3306/base3
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -27,7 +28,9 @@ spring:
 # 日志配置，打印SQL语句
 logging:
   level:
-    com.example.demo.mapper: DEBUG
+    root: WARN
+    com.example.demo: DEBUG  # 你的项目包名
+    org.springframework.web: DEBUG
 
 mybatis-plus:
 #  mapper-locations: classpath*:mapper/*.xml  # XML映射文件路径
