@@ -1,5 +1,6 @@
 package com.example.demo.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.pojo.StudentTask;
@@ -20,4 +21,8 @@ public interface TaskMapper extends BaseMapper<Task> {
                                            @Param("teacherId") Integer teacherId,
                                            @Param("studentId")Integer studentId,
                                            @Param("name")String name);
+
+    Page<Task> selectPageByid(@Param("page")Page<Task> page,@Param("taskId")Integer taskId,@Param("title")String title );
+
+
 }

@@ -29,4 +29,18 @@
         and st.is_deleted=0 and t.is_deleted=0
         </where>
     </select>
+    <select id="selectPageByid" resultType="com.example.demo.pojo.Task">
+        select * from task
+        <where>
+
+            <if test="taskId!=null">
+                and id=#{taskId}
+            </if>
+
+            <if test="title!=null and title!=''">
+                and title like concat('%',#{title},'%')
+            </if>
+            and is_deleted=0
+        </where>
+    </select>
 </mapper>

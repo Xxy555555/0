@@ -1,5 +1,6 @@
 package com.example.demo.service.Impl;
 
+import com.alibaba.excel.util.StringUtils;
 import com.aliyun.oss.OSSClient;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -14,6 +15,7 @@ import com.example.demo.pojo.vo.*;
 import com.example.demo.service.StudentService;
 import com.example.demo.util.ThreadLocalUtil;
 import org.apache.ibatis.annotations.Param;
+import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -192,7 +194,12 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         Integer studentId = (Integer) stringObjectMap.get("id");
         LambdaQueryWrapper<Positions> example = new LambdaQueryWrapper<Positions>().eq(Positions::getId, publishResume.getPositionId());
         Positions positions = positionMapper.selectOne(example);
-        LambdaQueryWrapper<Positions> example1 = new LambdaQueryWrapper<Positions>().eq(Positions::getId, publishResume.getPositionId());
+        LambdaQueryWrapper<CompanyAndStudent> example1 = new LambdaQueryWrapper<CompanyAndStudent>().eq(CompanyAndStudent::getPositionId, publishResume.getPositionId()).eq(CompanyAndStudent::getStudentId, studentId);
+        CompanyAndStudent companyAndStudent1 = companyAndStudentMapper.selectOne(example1);
+        if(companyAndStudent1==null)
+        {
+            throw new Myexception("已经提交过，请勿重复提交",9000);
+        }
         if(positions==null)
         {
             throw new Myexception("没有该岗位",9000);
@@ -259,6 +266,22 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             user.setHrId(company.getHrId());
             userMapper.updateById(user);
         }
+    }
+
+    @Override
+    public Page<Task> getTask(GetTaskVo getTaskVo) {
+        if(permissionVerification()!=1)
+        {
+            throw new Myexception("您不是学生无法进行该操作",9000);
+        }
+        Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
+        Integer studentId = (Integer) stringObjectMap.get("id");
+        LambdaQueryWrapper<User> eq = new LambdaQueryWrapper<User>().eq(User::getId, studentId);
+        User user=userMapper.selectOne(eq);
+
+        Page<Task> page = new Page<>(getTaskVo.getCurrent(), getTaskVo.getSize());
+        Page<Task> taskPage = taskMapper.selectPageByid(page,getTaskVo.getTaskId() ,getTaskVo.getTitle());
+        return taskPage;
     }
 
 

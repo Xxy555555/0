@@ -1,10 +1,7 @@
 package com.example.demo.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.demo.pojo.Company;
-import com.example.demo.pojo.MyPage;
-import com.example.demo.pojo.Positions;
-import com.example.demo.pojo.Student;
+import com.example.demo.pojo.*;
 import com.example.demo.pojo.dto.OPinionDTO;
 import com.example.demo.pojo.dto.StudentInternshipInfoDTO;
 import com.example.demo.pojo.vo.*;
@@ -32,4 +29,6 @@ public interface HrService {
     Company getCompanyMsg();
 
     Page<StudentInternshipInfoDTO> getOpinion(GetStudentIfoVo getStudentIfoVo);
+
+    Page<UserInfo> getStudentIfo(GetStudentIfoVo getStudentIfoVo);
 }

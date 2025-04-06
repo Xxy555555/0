@@ -42,6 +42,8 @@ public class HrServiceImpl implements HrService {
     private StudentMapper studentMapper;
     @Resource
     private PositionMapper positionMapper;
+    @Autowired
+    private UserInfoMapper userInfoMapper;
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void sendOpinion(OpinionVo opinionVo) {
@@ -300,6 +302,19 @@ public class HrServiceImpl implements HrService {
         Page<StudentInternshipInfoDTO> page=new Page<>(getStudentIfoVo.getCurrent(),getStudentIfoVo.getSize());
         Page<StudentInternshipInfoDTO> studentInternshipInfoDTOPage = companyMapper.selectStudentInternshipInfo(page, getStudentIfoVo.getStudentName(), hrId,getStudentIfoVo.getStudentId());
         return studentInternshipInfoDTOPage;
+    }
+
+    @Override
+    public Page<UserInfo> getStudentIfo(GetStudentIfoVo getStudentIfoVo) {
+        if(permissionVerification()!=3)
+        {
+            throw new Myexception("您不是HR不能查看",2333);
+        }
+        Page<UserInfo>page=new Page<>(getStudentIfoVo.getCurrent(),getStudentIfoVo.getSize());
+        Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
+        Integer HrId = (Integer) stringObjectMap.get("id");
+        Page<UserInfo> userInfos = userInfoMapper.selectListStudentInfo(page ,HrId, getStudentIfoVo.getStudentName());
+        return userInfos;
     }
 
     /**

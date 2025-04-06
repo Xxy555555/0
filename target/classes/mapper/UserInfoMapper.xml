@@ -44,4 +44,19 @@
             and user.is_deleted=0 and u.id=#{id} and user.teacher_id=#{teacherId}
         </where>
     </select>
+    <select id="selectListStudentInfo" resultType="com.example.demo.pojo.UserInfo">
+
+        select user_info.* from user_info left join user on user.id=user_info.id
+        <where>
+
+
+            and user.hr_id=#{HrId}
+
+            <if test="name!=null and name!=''">
+                and user_info.name like concat('%',#{name},'%')
+            </if>
+             and user.is_deleted=0 and user_info.is_deleted=0
+        </where>
+
+    </select>
 </mapper>

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.pojo.Company;
 import com.example.demo.pojo.CompanyAndStudent;
 import com.example.demo.pojo.MyPage;
+import com.example.demo.pojo.Task;
 import com.example.demo.pojo.dto.PositionDTO;
 import com.example.demo.pojo.vo.*;
 import com.example.demo.result.ResponseResult;
@@ -88,18 +89,25 @@ public class StudentContorller {
 
         return ResponseResult.ok("提交成功");
     }
-//接受offer
+
     @GetMapping("/getIsPass")//
     private ResponseResult getIsPass(MyPage myPage) {
         Page<CompanyAndStudent> companyList  =studentService.getIsPass(myPage);
 
         return ResponseResult.ok(companyList);
     }
-
+    //接受offer
     @PutMapping("/acceptOffer")//
     private ResponseResult acceptOffer(@RequestBody @Validated AcceptOffer acceptOffer) {
         studentService.acceptOffer(acceptOffer);
 
         return ResponseResult.ok("操作成功");
+    }
+    //查看任务
+    @GetMapping("/getTask")//
+    private ResponseResult getTask(GetTaskVo getTaskVo) {
+        Page<Task> companyList  =studentService.getTask(getTaskVo);
+
+        return ResponseResult.ok(companyList);
     }
 }

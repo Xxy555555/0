@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.demo.pojo.Company;
-import com.example.demo.pojo.MyPage;
-import com.example.demo.pojo.Positions;
-import com.example.demo.pojo.Student;
+import com.example.demo.pojo.*;
 import com.example.demo.pojo.dto.OPinionDTO;
 import com.example.demo.pojo.dto.StudentInternshipInfoDTO;
 import com.example.demo.pojo.vo.*;
@@ -106,6 +103,13 @@ public class HrController {
     private ResponseResult getOpinion(GetStudentIfoVo getStudentIfoVo) {
 
         Page<StudentInternshipInfoDTO> info=hrService.getOpinion(getStudentIfoVo);
+        return ResponseResult.ok(info);
+    }
+    //查看意见信息
+    @GetMapping("/getStudentIfo")
+    private ResponseResult getStudentIfo(GetStudentIfoVo getStudentIfoVo) {
+
+        Page<UserInfo> info=hrService.getStudentIfo(getStudentIfoVo);
         return ResponseResult.ok(info);
     }
 }

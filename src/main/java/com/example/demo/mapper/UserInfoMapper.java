@@ -17,4 +17,6 @@ Page<UserInfo> selectUserByPage(@Param("page") Page<UserInfo> page,@Param("type"
     Page<UserInfo1DTO> selectUserInfoByPage(@Param("page") Page<UserInfoDTO> page, @Param("type")Integer type);
    Page<UserInfo> selectListUserInfo(@Param("page")Page<UserInfo> page,@Param("InternshipStatus") Integer InternshipStatus,@Param("teacherId") Integer teacherId,@Param("name")String name);
     UserInfo1DTO selectUserInfoByself(@Param("id")Integer id, @Param("teacherId")Integer teacherId);
+
+    Page<UserInfo> selectListStudentInfo(@Param("page") Page<UserInfo> page,@Param("HrId") Integer hrId,@Param("name") String studentName);
 }
