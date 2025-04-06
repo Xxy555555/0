@@ -188,16 +188,17 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         {
             throw new Myexception("您不是学生无法进行该操作",9000);
         }
-        //
+        Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
+        Integer studentId = (Integer) stringObjectMap.get("id");
         LambdaQueryWrapper<Positions> example = new LambdaQueryWrapper<Positions>().eq(Positions::getId, publishResume.getPositionId());
         Positions positions = positionMapper.selectOne(example);
+        LambdaQueryWrapper<Positions> example1 = new LambdaQueryWrapper<Positions>().eq(Positions::getId, publishResume.getPositionId());
         if(positions==null)
         {
             throw new Myexception("没有该岗位",9000);
         }
 
-        Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
-        Integer studentId = (Integer) stringObjectMap.get("id");
+
         CompanyAndStudent companyAndStudent = new CompanyAndStudent();
         companyAndStudent.setStudentId(studentId);
         companyAndStudent.setPositionId(publishResume.getPositionId());

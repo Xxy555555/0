@@ -1,6 +1,7 @@
 package com.example.demo.service.Impl;
 
 import cn.hutool.extra.template.TemplateEngine;
+import com.alibaba.excel.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -13,6 +14,7 @@ import com.example.demo.pojo.vo.*;
 import com.example.demo.service.HrService;
 import com.example.demo.util.ThreadLocalUtil;
 import jakarta.annotation.Resource;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -168,7 +170,7 @@ public class HrServiceImpl implements HrService {
     }
 
     @Override
-    public Page<Positions> getReview(MyPage myPage) {
+    public Page<Positions> getReview(GetReviewVo getReviewVo) {
         if(permissionVerification()!=3)
         {
             throw new Myexception("您不是HR不能查看",2333);
@@ -181,8 +183,9 @@ public class HrServiceImpl implements HrService {
         {
             throw new Myexception("请先注册公司",2333);
         }
-        Page<Positions> page=new Page<>(myPage.getCurrent(),myPage.getSize());
-        LambdaQueryWrapper<Positions>ex=new LambdaQueryWrapper<Positions>().eq(Positions::getCompanyId,company.getId());
+        Page<Positions> page=new Page<>(getReviewVo.getCurrent(),getReviewVo.getSize());
+        LambdaQueryWrapper<Positions>ex=new LambdaQueryWrapper<Positions>().eq(Positions::getCompanyId,company.getId()).like(StringUtils.isNotBlank(getReviewVo.getPosition()),
+                Positions::getPosition, getReviewVo.getPosition());
         Page<Positions> positions = positionMapper.selectPage(page,ex);
         return positions;
     }
@@ -295,7 +298,7 @@ public class HrServiceImpl implements HrService {
         Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
         Integer hrId = (Integer) stringObjectMap.get("id");
         Page<StudentInternshipInfoDTO> page=new Page<>(getStudentIfoVo.getCurrent(),getStudentIfoVo.getSize());
-        Page<StudentInternshipInfoDTO> studentInternshipInfoDTOPage = companyMapper.selectStudentInternshipInfo(page, getStudentIfoVo.getStudentName(), hrId);
+        Page<StudentInternshipInfoDTO> studentInternshipInfoDTOPage = companyMapper.selectStudentInternshipInfo(page, getStudentIfoVo.getStudentName(), hrId,getStudentIfoVo.getStudentId());
         return studentInternshipInfoDTOPage;
     }
 

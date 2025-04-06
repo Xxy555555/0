@@ -5,5 +5,6 @@ import lombok.Data;
 
 @Data
 public class GetStudentIfoVo extends MyPage {
+    private Integer studentId;
     private String studentName;
 }

@@ -5,9 +5,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public enum StatusEnum {
-    STU(1,"submit"),
-    TEACHER(2,"pass"),
-    HR(3,"noPass");
+    NO_STATUS(0,"no_status"),
+    SUBMIT(1,"submit"),
+    PASS(2,"pass"),
+    NO_PASS(3,"noPass");
     private Integer code;
     private String status;
     private StatusEnum(Integer code, String position) {
@@ -20,9 +21,6 @@ public enum StatusEnum {
     public String getStatus() {
         return status;
     }
-
-
-
 
     public static StatusEnum fromCode(int code) {
        for (StatusEnum statusEnum : StatusEnum.values()) {

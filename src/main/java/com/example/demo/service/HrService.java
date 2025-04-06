@@ -20,7 +20,7 @@ public interface HrService {
 
     void hiredStudent(PositionVo positionVo);
 
-    Page<Positions> getReview(MyPage myPage);
+    Page<Positions> getReview(GetReviewVo  getReviewVo);
 
 
     void publishReview(JobStatus jobStatus);

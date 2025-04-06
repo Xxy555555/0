@@ -264,7 +264,7 @@ public class AdminServiceImpl implements AdminService {
         List<reviewStatusNumDTO> reviewStatusNumDTOS = userMapper.selectreviewStatusNum();
         List<Map<String,Integer>> collect1 = reviewStatusNumDTOS.stream().map(dto -> {
                     StatusEnum mapper = StatusEnum.fromCode(dto.getReviewStatus());
-                    return Map.of(mapper.getStatus(), dto.getNum());
+                        return Map.of(mapper.getStatus(), dto.getNum());
                 })
                 .collect(Collectors.toList());
         list.addAll(collect);

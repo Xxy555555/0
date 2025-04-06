@@ -17,5 +17,5 @@ IPage<PositionDTO> selectPageByLike(@Param("page") Page<PositionDTO> page,
                                     @Param("position") String position,
                                     @Param("num") Integer num,
                                     @Param("salary") Double salary);
-Page<StudentInternshipInfoDTO> selectStudentInternshipInfo(@Param("page")Page<StudentInternshipInfoDTO>page,@Param("name")String name,@Param("HrId")Integer hrId);
+Page<StudentInternshipInfoDTO> selectStudentInternshipInfo(@Param("page")Page<StudentInternshipInfoDTO>page,@Param("name")String name,@Param("HrId")Integer hrId,@Param("studentId")Integer studentId);
 }

@@ -68,9 +68,9 @@ public class HrController {
     }
     //查看招聘信息状态
     @GetMapping("/getReview")
-    private ResponseResult getReview(MyPage myPage) {
+    private ResponseResult getReview(GetReviewVo getReviewVo) {
 
-        Page<Positions> info=hrService.getReview(myPage);
+        Page<Positions> info=hrService.getReview(getReviewVo);
         return ResponseResult.ok(info);
     }
     //提交审核

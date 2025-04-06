@@ -1,4 +1,9 @@
 package com.example.demo.pojo.vo;
 
-public class GetReviewVo {
+import com.example.demo.pojo.MyPage;
+import lombok.Data;
+
+@Data
+public class GetReviewVo extends MyPage {
+    private String position;
 }

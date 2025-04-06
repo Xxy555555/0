@@ -54,10 +54,8 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>im
     @Override
     public UserInfo1DTO getUserinfo(Integer id) {
         Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
-        Integer userId = (Integer) stringObjectMap.get("id");
-        QueryWrapper<User> queryWrapper1 = new QueryWrapper<User>().eq("id", userId);
-        User user = userMapper.selectOne(queryWrapper1);
-        UserInfo1DTO userInfo1DTO = userInfoMapper.selectUserInfoByself(id, user.getType());
+        Integer teacherId = (Integer) stringObjectMap.get("id");
+        UserInfo1DTO userInfo1DTO = userInfoMapper.selectUserInfoByself(id, teacherId);
 
         return userInfo1DTO;
     }

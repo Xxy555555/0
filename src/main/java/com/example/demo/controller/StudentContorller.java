@@ -52,7 +52,6 @@ public class StudentContorller {
         return ResponseResult.ok(studentService.oss( file,fileName));
     }
 
-
     /**
      * 简历入库
      * @param
@@ -89,7 +88,7 @@ public class StudentContorller {
 
         return ResponseResult.ok("提交成功");
     }
-
+//接受offer
     @GetMapping("/getIsPass")//
     private ResponseResult getIsPass(MyPage myPage) {
         Page<CompanyAndStudent> companyList  =studentService.getIsPass(myPage);

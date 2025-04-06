@@ -33,6 +33,9 @@
             <if test="name!=null and name!=''">
                 and uf.name like concat ('%' ,#{name},'%')
             </if>
+            <if test="studentId!=null ">
+                and u.id=#{studentId}
+            </if>
       and  u.hr_id=#{HrId} and uf.is_deleted=0
         </where>
 
