@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.exception.Myexception;
 import com.example.demo.mapper.*;
 import com.example.demo.pojo.*;
+import com.example.demo.pojo.dto.Position1DTO;
 import com.example.demo.pojo.dto.PositionDTO;
 import com.example.demo.pojo.vo.*;
 import com.example.demo.service.StudentService;
@@ -282,6 +283,19 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         Page<Task> page = new Page<>(getTaskVo.getCurrent(), getTaskVo.getSize());
         Page<Task> taskPage = taskMapper.selectPageByid(page,getTaskVo.getTaskId() ,getTaskVo.getTitle());
         return taskPage;
+    }
+
+    @Override
+    public Page<Position1DTO> getResume(CompanyPageVo companyPageVo) {
+        if(permissionVerification()!=1)
+        {
+            throw new Myexception("您不是学生无法进行该操作",9000);
+        }
+        Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
+        Integer studentId = (Integer) stringObjectMap.get("id");
+        Page<Position1DTO> page = new Page<>(companyPageVo.getCurrent(), companyPageVo.getSize());
+        Page<Position1DTO> companyIPage = positionMapper.getResume(page,companyPageVo.getPosition(),studentId);
+        return companyIPage;
     }
 
 

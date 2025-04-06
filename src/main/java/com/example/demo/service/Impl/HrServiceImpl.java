@@ -9,6 +9,7 @@ import com.example.demo.enums.MyExcptionEnum;
 import com.example.demo.exception.Myexception;
 import com.example.demo.mapper.*;
 import com.example.demo.pojo.*;
+import com.example.demo.pojo.dto.GetPositionInfoDTO;
 import com.example.demo.pojo.dto.StudentInternshipInfoDTO;
 import com.example.demo.pojo.vo.*;
 import com.example.demo.service.HrService;
@@ -315,6 +316,20 @@ public class HrServiceImpl implements HrService {
         Integer HrId = (Integer) stringObjectMap.get("id");
         Page<UserInfo> userInfos = userInfoMapper.selectListStudentInfo(page ,HrId, getStudentIfoVo.getStudentName());
         return userInfos;
+    }
+
+    @Override
+    public Page<GetPositionInfoDTO> getPositionInfo(Position1Vo position1Vo) {
+        if(permissionVerification()!=3)
+        {
+            throw new Myexception("您不是HR不能查看",2333);
+        }
+        Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
+        Integer HrId = (Integer) stringObjectMap.get("id");
+        Page<GetPositionInfoDTO>page=new Page<>(position1Vo.getCurrent(),position1Vo.getSize());
+        Page<GetPositionInfoDTO>info= userInfoMapper.GetPositionInfoDTO(page,HrId,position1Vo.getPositionName(),position1Vo.getIsAccept());
+
+        return info;
     }
 
     /**

@@ -59,4 +59,25 @@
         </where>
 
     </select>
+    <select id="GetPositionInfoDTO" resultType="com.example.demo.pojo.dto.GetPositionInfoDTO">
+
+        select user_info.id,user_info.name,user_info.phone,user.email,p.position,p.address,s.resume ,cs.is_accept isAccept from user_info left join user on user.id=user_info.id
+                                                                left join company_and_student cs on cs.student_id=user.id
+                                                                                                        left join position p on p.id=cs.position_id
+                                                                                                                                    left join student s on s.student_id=user.id
+                                                                                                                                                               left join company c on c.id= p.company_id
+        <where>
+
+
+            and c.hr_id=#{HrId}
+            <if test="isAccept!=null">
+                and cs.is_accept=#{isAccept}
+            </if>
+            <if test="positionName!=null and positionName!=''">
+                and p.position like concat('%',#{positionName},'%')
+            </if>
+            and user.is_deleted=0 and user_info.is_deleted=0
+        </where>
+
+    </select>
 </mapper>

@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.pojo.*;
+import com.example.demo.pojo.dto.GetPositionInfoDTO;
 import com.example.demo.pojo.dto.OPinionDTO;
 import com.example.demo.pojo.dto.StudentInternshipInfoDTO;
 import com.example.demo.pojo.vo.*;
@@ -47,15 +48,15 @@ public class HrController {
 
     /**
      * 查看简历
-     * @param getResumeVo
+     * @param
      * @return
      */
-    @GetMapping("/getResume")
-    private ResponseResult getResume(@Validated GetResumeVo getResumeVo) {
-
-       List< Student> students=hrService.getResume(getResumeVo);
-        return ResponseResult.ok(students);
-    }
+//    @GetMapping("/getResume")
+//    private ResponseResult getResume(@Validated GetResumeVo getResumeVo) {
+//
+//       List< Student> students=hrService.getResume(getResumeVo);
+//        return ResponseResult.ok(students);
+//    }
     //录用学生
     @PutMapping("/hiredStudent")
     private ResponseResult hiredStudent(@RequestBody PositionVo positionVo) {
@@ -110,6 +111,13 @@ public class HrController {
     private ResponseResult getStudentIfo(GetStudentIfoVo getStudentIfoVo) {
 
         Page<UserInfo> info=hrService.getStudentIfo(getStudentIfoVo);
+        return ResponseResult.ok(info);
+    }
+    //查询岗位学生信息
+    @GetMapping("/getPositionInfo")
+    private ResponseResult getPositionInfo(Position1Vo position1Vo) {
+
+        Page<GetPositionInfoDTO> info=hrService.getPositionInfo(position1Vo);
         return ResponseResult.ok(info);
     }
 }

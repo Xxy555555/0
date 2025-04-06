@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.pojo.UserInfo;
+import com.example.demo.pojo.dto.GetPositionInfoDTO;
 import com.example.demo.pojo.dto.UserInfo1DTO;
 import com.example.demo.pojo.dto.UserInfoDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -19,4 +20,6 @@ Page<UserInfo> selectUserByPage(@Param("page") Page<UserInfo> page,@Param("type"
     UserInfo1DTO selectUserInfoByself(@Param("id")Integer id, @Param("teacherId")Integer teacherId);
 
     Page<UserInfo> selectListStudentInfo(@Param("page") Page<UserInfo> page,@Param("HrId") Integer hrId,@Param("name") String studentName);
+
+    Page<GetPositionInfoDTO> GetPositionInfoDTO(@Param("page") Page<GetPositionInfoDTO> page,@Param("HrId") Integer HrId,@Param("positionName") String positionName,@Param("isAccept")Integer isAccept);
 }

@@ -21,4 +21,22 @@
 
     </select>
 
+    <select id="getResume" resultType="com.example.demo.pojo.dto.Position1DTO">
+
+        select p.*,c1.company_name companyName from user u left join company_and_student c on u.id = c.student_id left join position p on p.id = c.position_id
+                                                                                                                   left join company c1 on p.company_id = c1.id
+        <where>
+
+            and u.is_deleted = 0
+
+           and c.student_id = #{studentId}
+
+            <if test="position!=null">
+                and p.position like concat('%',#{position},'%')
+            </if>
+
+
+        </where>
+
+    </select>
 </mapper>

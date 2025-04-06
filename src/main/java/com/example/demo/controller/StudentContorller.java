@@ -6,6 +6,7 @@ import com.example.demo.pojo.Company;
 import com.example.demo.pojo.CompanyAndStudent;
 import com.example.demo.pojo.MyPage;
 import com.example.demo.pojo.Task;
+import com.example.demo.pojo.dto.Position1DTO;
 import com.example.demo.pojo.dto.PositionDTO;
 import com.example.demo.pojo.vo.*;
 import com.example.demo.result.ResponseResult;
@@ -107,6 +108,13 @@ public class StudentContorller {
     @GetMapping("/getTask")//
     private ResponseResult getTask(GetTaskVo getTaskVo) {
         Page<Task> companyList  =studentService.getTask(getTaskVo);
+
+        return ResponseResult.ok(companyList);
+    }
+    //查看提交过的简历
+    @GetMapping("/getResume")//
+    private ResponseResult getResume(CompanyPageVo companyPageVo) {
+        Page<Position1DTO> companyList  =studentService.getResume(companyPageVo);
 
         return ResponseResult.ok(companyList);
     }
