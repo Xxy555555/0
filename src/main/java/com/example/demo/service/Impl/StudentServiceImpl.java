@@ -12,6 +12,7 @@ import com.example.demo.mapper.*;
 import com.example.demo.pojo.*;
 import com.example.demo.pojo.dto.Position1DTO;
 import com.example.demo.pojo.dto.PositionDTO;
+import com.example.demo.pojo.dto.UserInfo1DTO;
 import com.example.demo.pojo.vo.*;
 import com.example.demo.service.StudentService;
 import com.example.demo.util.ThreadLocalUtil;
@@ -296,6 +297,15 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         Page<Position1DTO> page = new Page<>(companyPageVo.getCurrent(), companyPageVo.getSize());
         Page<Position1DTO> companyIPage = positionMapper.getResume(page,companyPageVo.getPosition(),studentId);
         return companyIPage;
+    }
+
+    @Override
+    public UserInfo1DTO getUserinfo() {
+        Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
+        Integer Id = (Integer) stringObjectMap.get("id");
+        UserInfo1DTO userInfo1DTO = userInfoMapper.selectUserInfo(Id);
+
+        return userInfo1DTO;
     }
 
 

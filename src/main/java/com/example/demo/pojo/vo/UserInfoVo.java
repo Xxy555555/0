@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserInfoVo {
     @ExcelProperty("id")
-    @NotNull(groups = Update.class)
-    private Integer Id;//主键ID
+
+    private Integer id;//主键ID
     @ExcelProperty("姓名")
     @NotNull(message = "姓名不能为空")
     @Pattern(regexp = "^\\S{1,10}$",message = "姓名长度为1-10")

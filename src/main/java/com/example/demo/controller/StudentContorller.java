@@ -8,6 +8,7 @@ import com.example.demo.pojo.MyPage;
 import com.example.demo.pojo.Task;
 import com.example.demo.pojo.dto.Position1DTO;
 import com.example.demo.pojo.dto.PositionDTO;
+import com.example.demo.pojo.dto.UserInfo1DTO;
 import com.example.demo.pojo.vo.*;
 import com.example.demo.result.ResponseResult;
 import com.example.demo.service.StudentService;
@@ -117,5 +118,10 @@ public class StudentContorller {
         Page<Position1DTO> companyList  =studentService.getResume(companyPageVo);
 
         return ResponseResult.ok(companyList);
+    }
+    @GetMapping("/getUserinfo")
+    public ResponseResult getUserinfo() {
+        UserInfo1DTO userInfo= studentService.getUserinfo();
+        return ResponseResult.ok(userInfo);
     }
 }

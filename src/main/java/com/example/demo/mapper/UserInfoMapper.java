@@ -22,4 +22,8 @@ Page<UserInfo> selectUserByPage(@Param("page") Page<UserInfo> page,@Param("type"
     Page<UserInfo> selectListStudentInfo(@Param("page") Page<UserInfo> page,@Param("HrId") Integer hrId,@Param("name") String studentName);
 
     Page<GetPositionInfoDTO> GetPositionInfoDTO(@Param("page") Page<GetPositionInfoDTO> page,@Param("HrId") Integer HrId,@Param("positionName") String positionName,@Param("isAccept")Integer isAccept);
+
+    void updateById1(UserInfo userInfo);
+
+    UserInfo1DTO selectUserInfo(@Param("id") Integer id);
 }

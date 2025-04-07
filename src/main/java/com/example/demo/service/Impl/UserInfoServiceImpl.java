@@ -31,10 +31,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>im
     @Override
     @Transactional
     public void add(UserInfoVo userInfoVo) {
-        //设置id
-        userInfoVo.setId(permissionVerification());
-
-       QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<UserInfo>().eq("phone", userInfoVo.getPhone());
+        Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
+        Integer id = (Integer) stringObjectMap.get("id");
+        QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<UserInfo>().eq("phone", userInfoVo.getPhone()).ne("id",id);
         Long l = userInfoMapper.selectCount(queryWrapper);
         if (l > 0) {
             throw new Myexception("该手机号已经被注册",2005);
@@ -42,13 +41,20 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>im
         UserInfo userInfo = new UserInfo();
         BeanUtils.copyProperties(userInfoVo, userInfo);
 
-        Map<String, Object> stringObjectMap = ThreadLocalUtil.get();
-        Integer id = (Integer) stringObjectMap.get("id");
         QueryWrapper<User> queryWrapper1 = new QueryWrapper<User>().eq("id", id);
         User user = userMapper.selectOne(queryWrapper1);
         userInfo.setType(user.getType());
-        userInfoMapper.insert(userInfo);
+        if (userInfoVo.getId() == null) {
 
+            userInfo.setId(id);
+            userInfoMapper.insert(userInfo);
+        }else {
+            if(!userInfoVo.getId().equals(id))
+            {
+                throw new Myexception("请修改自己的信息",2005);
+            }
+            userInfoMapper.updateById1(userInfo);
+        }
     }
 
     @Override
