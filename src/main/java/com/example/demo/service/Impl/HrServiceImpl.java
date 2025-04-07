@@ -73,7 +73,7 @@ public class HrServiceImpl implements HrService {
             QueryWrapper<User> queryWrapper1 = new QueryWrapper<User>().eq("id", user.getTeacherId());
             User teacher = userMapper.selectOne(queryWrapper1);
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(Hr.getEmail());//雇主邮箱
+            message.setFrom("1774012815@qq.com");//雇主邮箱
             message.setTo(teacher.getEmail());
             message.setSubject("意见信");
             message.setText("有新的雇主信息录入到程序");

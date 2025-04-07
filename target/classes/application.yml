@@ -13,17 +13,33 @@ spring:
       connection-timeout: 30000  # 连接超时时间（30秒）
       pool-name: HikariPool-Base3
     #email配置
+#  mail:
+#    host: smtp.qq.com # smtp地址，开通的时候会显示
+#    port: 587
+#    username: 1774012815@qq.com # 你的邮箱账号
+#    password: cdxqqaembhxzcgfi # 你的邮箱授权码
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+#    protocol: smtp
   mail:
-    host: smtp.qq.com # smtp地址，开通的时候会显示
-    username: 1774012815@qq.com # 你的邮箱账号
-    password: cdxqqaembhxzcgfi # 你的邮箱授权码
+    host: smtp.qq.com               # QQ邮箱SMTP服务器
+    port: 465                       # SSL加密端口（或587 for TLS）
+    username: 1774012815@qq.com         # 你的QQ邮箱（完整地址）
+    password: fsofxxcvxifrbjig      # 填写刚生成的16位授权码（不是QQ密码！）
+    protocol: smtp
     properties:
       mail:
         smtp:
-          auth: true
+          auth: true                # 启用认证
+          ssl:
+            enable: true            # 465端口必须开启SSL
           starttls:
-            enable: true
-    protocol: smtp
+            enable: false           # 如果使用587端口，改为true
+        debug: true                # 开启调试日志（可选）
 
 # 日志配置，打印SQL语句
 logging:

@@ -109,7 +109,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
                                User stu = userMapper.selectOne(queryWrapper3);
 
                                SimpleMailMessage message = new SimpleMailMessage();
-                               message.setFrom(teacher.getEmail());//老师邮箱
+                               message.setFrom("1774012815@qq.com");//老师邮箱
                                message.setTo(stu.getEmail());
                                message.setSubject("任务未完成提醒");
                                message.setText("您的任务"+obj.getTask()+"未完成");
