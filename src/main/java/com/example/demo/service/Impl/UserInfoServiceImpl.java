@@ -66,6 +66,17 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>im
         return userInfo1DTO;
     }
 
+    @Override
+    public UserInfoVo getUserInfoById(Integer id) {
+        UserInfo userInfo = userInfoMapper.selectById(id);
+        if (userInfo != null) {
+            UserInfoVo userInfoVo = new UserInfoVo();
+            BeanUtils.copyProperties(userInfo, userInfoVo);
+            return userInfoVo;
+        }
+        return null;
+    }
+
 
     public Integer permissionVerification() {
         Map<String, Object> stringObjectMap = ThreadLocalUtil.get();

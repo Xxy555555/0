@@ -198,7 +198,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         Positions positions = positionMapper.selectOne(example);
         LambdaQueryWrapper<CompanyAndStudent> example1 = new LambdaQueryWrapper<CompanyAndStudent>().eq(CompanyAndStudent::getPositionId, publishResume.getPositionId()).eq(CompanyAndStudent::getStudentId, studentId);
         CompanyAndStudent companyAndStudent1 = companyAndStudentMapper.selectOne(example1);
-        if(companyAndStudent1==null)
+        if(companyAndStudent1!=null)
         {
             throw new Myexception("已经提交过，请勿重复提交",9000);
         }
@@ -306,6 +306,11 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         UserInfo1DTO userInfo1DTO = userInfoMapper.selectUserInfo(Id);
 
         return userInfo1DTO;
+    }
+
+    @Override
+    public Student getResumeUrl(String id) {
+        return studentMapper.findResumeUrlById(id);
     }
 
 

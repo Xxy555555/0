@@ -33,4 +33,5 @@ public interface StudentService extends IService<Student> {
 
     UserInfo1DTO getUserinfo();
 
+    Student getResumeUrl(String id);
 }

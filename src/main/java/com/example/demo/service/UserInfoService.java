@@ -11,4 +11,6 @@ public interface UserInfoService extends IService<UserInfo> {
     void add(UserInfoVo userInfoVo);
 
     UserInfo1DTO getUserinfo(Integer id);
+
+    UserInfoVo getUserInfoById(Integer id);
 }

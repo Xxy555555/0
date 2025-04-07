@@ -124,4 +124,12 @@ public class StudentContorller {
         UserInfo1DTO userInfo= studentService.getUserinfo();
         return ResponseResult.ok(userInfo);
     }
+
+    /**
+     * 通过id获取简历url
+     */
+    @GetMapping("/getResumeUrl/{id}")
+    public ResponseResult getResumeUrl(@PathVariable String id) {
+        return ResponseResult.ok(studentService.getResumeUrl(id));
+    }
 }

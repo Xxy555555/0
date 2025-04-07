@@ -33,4 +33,9 @@ public class UserInfoController {
         UserInfo1DTO userInfo= userInfoService.getUserinfo(id);
         return ResponseResult.ok(userInfo);
     }
+    @GetMapping("/getUserInfoById/{id}")
+    public ResponseResult getUserInfoById(@PathVariable("id")Integer id) {
+       UserInfoVo userInfos = userInfoService.getUserInfoById(id);
+        return ResponseResult.ok(userInfos);
+    }
 }

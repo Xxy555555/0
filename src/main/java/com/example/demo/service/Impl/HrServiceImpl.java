@@ -81,7 +81,7 @@ public class HrServiceImpl implements HrService {
 
                 throw new Myexception("发送失败",2333);
             }
-            mailSender.send(message);
+//            mailSender.send(message);
         }else{
             throw new Myexception("您没有招聘该学生",120);
         }
